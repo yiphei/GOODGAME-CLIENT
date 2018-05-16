@@ -1,17 +1,20 @@
-import React from 'react';
+// import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
 import Welcome from '../components/welcome';
 import Introduction from '../components/introduction';
+import Login from '../components/login';
 import Home from '../components/home';
 
-const Main = createStackNavigator({
-  Welcome,
-  Introduction,
-  Home,
-},
+const Main = createStackNavigator(
   {
-    initialRouteName: 'Welcome',
-});
+    Welcome,
+    Introduction,
+    Login,
+    Home,
+  },
+  {
+    initialRouteName: 'Login',
+  },
+);
 
 export default Main;

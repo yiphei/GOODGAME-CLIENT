@@ -1,13 +1,18 @@
-import React, { Component } from 'react'
-import Swiper from 'react-native-swiper'
-import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import React, { Component } from 'react';
+import Swiper from 'react-native-swiper';
+import { Text, StyleSheet, ImageBackground } from 'react-native';
 
-var styles = StyleSheet.create({
+const img1 = require('../img/intro1.png');
+const img2 = require('../img/intro2.png');
+const img3 = require('../img/intro3.png');
+const img4 = require('../img/intro4.png');
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: undefined,
     height: undefined,
-    backgroundColor:'transparent',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -16,7 +21,7 @@ var styles = StyleSheet.create({
     fontSize: 50,
     color: 'red',
     textShadowColor: 'rgba(0, 0, 0, 1)',
-    textShadowOffset: {width: -1, height: 1},
+    textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10,
     flex: 1,
     justifyContent: 'flex-start',
@@ -25,14 +30,13 @@ var styles = StyleSheet.create({
 });
 
 class Introduction extends Component {
-
   viewStyle() {
     return {
       flex: 1,
       backgroundColor: 'rgb(0,0,0)',
       justifyContent: 'center',
       alignItems: 'center',
-    }
+    };
   }
 
   render() {
@@ -40,33 +44,41 @@ class Introduction extends Component {
       <Swiper
         loop={false}
         showsPagination={false}
-        index={0}>
+        index={0}
+      >
         <ImageBackground
-          source={require('../img/intro1.png')}
-          style={styles.container}/>
+          source={img1}
+          style={styles.container}
+        />
         <Swiper
           horizontal={false}
           loop={false}
           showsPagination={false}
-          index={1}>
+          index={1}
+        >
           <ImageBackground
-            source={require('../img/intro2.png')}
-            style={styles.container}/>
+            source={img2}
+            style={styles.container}
+          />
         </Swiper>
         <Swiper
           horizontal={false}
           loop={false}
           showsPagination={false}
-          index={2}>
+          index={2}
+        >
           <ImageBackground
-            source={require('../img/intro3.png')}
-            style={styles.container}/>
+            source={img3}
+            style={styles.container}
+          />
         </Swiper>
         <ImageBackground
-          source={require('../img/intro4.png')}
-          style={styles.container}>
+          source={img4}
+          style={styles.container}
+        >
           <Text style={styles.welcome}
-            onPress={() => this.props.navigation.navigate('Home')}>
+            onPress={() => this.props.navigation.navigate('Login')}
+          >
             Click to Begin!
           </Text>
         </ImageBackground>
@@ -76,4 +88,4 @@ class Introduction extends Component {
   }
 }
 
-export default Introduction
+export default Introduction;
