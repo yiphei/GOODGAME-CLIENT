@@ -1,4 +1,6 @@
 {
+  "name": "goodGame",
+  "displayName": "goodGame",
   "expo": {
     "name": "goodGame",
     "description": "This project is really great.",
