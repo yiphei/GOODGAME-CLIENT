@@ -18,7 +18,7 @@ const Main = createStackNavigator(
     CreateGame,
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Welcome',
   },
 );
 
