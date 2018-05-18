@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { signinUser } from '../actions/index';
+import { signupUser } from '../actions';
 
-const background = require('../img/login.png');
+const background = require('../img/court.png');
 
-class Login extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '', password: '',
+      email: '', password: '', handle: '',
     };
-    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
   }
 
-  signIn() {
+  signUp() {
     console.log(this.state);
-    this.props.signinUser(this.state);
+    this.props.signupUser(this.state);
     this.props.navigation.navigate('Home');
   }
 
@@ -26,10 +26,6 @@ class Login extends Component {
         source={background}
         style={styles.container}
       >
-        <Button title="Sign Up"
-          style={styles.button}
-          onPress={() => this.props.navigation.navigate('SignUp')}
-        />
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
           onChangeText={email => this.setState({ email })}
@@ -40,7 +36,12 @@ class Login extends Component {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Login" onPress={() => this.signIn()} />
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={handle => this.setState({ handle })}
+          value={this.state.handle}
+        />
+        <Button title="Submit" onPress={() => this.signUp()} />
       </ImageBackground>
     );
   }
@@ -54,15 +55,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
 
   },
-  button: {
+  gameList: {
     flex: 1,
-    justifyContent: 'flex-end',
+  },
+  game: {
+    borderRadius: 30,
+    borderWidth: 10,
+    borderColor: '#000000',
+  },
+  gameText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 50,
+    color: 'red',
   },
 });
 
-export default connect(null, { signinUser })(Login);
-
-// <Button title="Login"
-//   style={styles.button}
-//   onPress={() => this.props.navigation.navigate('Home')}
-// />
+export default connect(null, { signupUser })(SignUp);

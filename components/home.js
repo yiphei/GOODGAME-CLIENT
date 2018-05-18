@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, ImageBackground } from 'react-native';
+import { Text, StyleSheet, ImageBackground, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchGames } from '../actions';
 
@@ -14,10 +14,12 @@ class Home extends Component {
     console.log(this.props.games);
     const gameList = this.props.games.all.map(game =>
       (
-        <Text style={styles.game}> {game.title} </Text>
+        <View style={styles.game}>
+          <Text style={styles.gameText}> {game.title} </Text>
+        </View>
       ));
     return (
-      <Text>{gameList}</Text>
+      <Text style={styles.gameList} >{gameList}</Text>
     );
   }
 
@@ -27,6 +29,10 @@ class Home extends Component {
         source={background}
         style={styles.container}
       >
+        <Button title="Create Game"
+          style={styles.button}
+          onPress={() => this.props.navigation.navigate('CreateGame')}
+        />
         {this.renderGames()}
       </ImageBackground>
     );
@@ -41,13 +47,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
 
   },
+  gameList: {
+    flex: 1,
+  },
   game: {
+    borderRadius: 30,
+    borderWidth: 10,
+    borderColor: '#000000',
+  },
+  gameText: {
     fontFamily: 'Helvetica-Bold',
     fontSize: 50,
     color: 'red',
-    textShadowColor: 'rgba(0, 0, 0, 1)',
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10,
   },
 });
 
