@@ -6,6 +6,7 @@ import Login from '../components/login';
 import SignUp from '../components/signup';
 import Home from '../components/home';
 import CreateGame from '../components/createGame';
+import MainTabBar from './main-tab-bar';
 
 
 const Main = createStackNavigator(
@@ -14,8 +15,7 @@ const Main = createStackNavigator(
     Introduction,
     Login,
     SignUp,
-    Home,
-    CreateGame,
+    MainTabBar,
   },
   {
     initialRouteName: 'Welcome',

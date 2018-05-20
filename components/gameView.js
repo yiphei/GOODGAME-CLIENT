@@ -5,7 +5,7 @@ import { fetchGame } from '../actions/index';
 
 const background = require('../img/court.png');
 
-class Game extends Component {
+class GameView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,8 +18,8 @@ class Game extends Component {
     };
   }
   componentDidMount() {
-    console.log('post componentdidmount', this.props.match.params.postID);
-    this.props.fetchPost(this.props.match.params.postID);
+    console.log('post componentdidmount', this.props.navigation.state.params.game._id);
+    this.props.fetchGame(this.props.navigation.state.params.game._id);
   }
 
   render() {
@@ -29,7 +29,16 @@ class Game extends Component {
         style={styles.container}
       >
         <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.title} </Text>
+          <Text style={styles.gameText}> {this.props.game.game.title} </Text>
+        </View>
+        <View style={styles.game}>
+          <Text style={styles.gameText}> {this.props.game.game.content} </Text>
+        </View>
+        <View style={styles.game}>
+          <Text style={styles.gameText}> {this.props.game.game.tags} </Text>
+        </View>
+        <View style={styles.game}>
+          <Text style={styles.gameText}> {this.props.game.game.cover_url} </Text>
         </View>
       </ImageBackground>
     );
@@ -58,8 +67,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
   {
-    game: state.game,
+    game: state.games,
   }
 );
 
-export default connect(mapStateToProps, { fetchGame })(Game);
+export default connect(mapStateToProps, { fetchGame })(GameView);

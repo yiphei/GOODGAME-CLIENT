@@ -10,12 +10,17 @@ class Home extends Component {
     this.props.fetchGames();
   }
 
+  showGameDetail = (game) => {
+    this.props.navigation.navigate('GameView', { game });
+  }
+
+
   renderGames() {
     console.log(this.props.games);
     const gameList = this.props.games.all.map(game =>
       (
         <View style={styles.game}>
-          <Text style={styles.gameText}> {game.title} </Text>
+          <Text onPress={() => { this.showGameDetail(game); }} style={styles.gameText}> {game.title} </Text>
         </View>
       ));
     return (
