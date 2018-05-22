@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, StyleSheet, ImageBackground, View, Button } from 'react-native';
-import { fetchGame } from '../actions/index';
+import { Text, StyleSheet, ImageBackground, View, Button, ScrollView } from 'react-native';
+import { fetchGame, joinGame } from '../actions/index';
 
 const background = require('../img/court.png');
 
 class GameView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      _id: null,
-      title: null,
-      content: null,
-      tags: null,
-      cover_url: null,
-      isEditing: false,
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
+
   componentDidMount() {
     console.log('post componentdidmount', this.props.navigation.state.params.game._id);
     this.props.fetchGame(this.props.navigation.state.params.game._id);
+  }
+
+  onJoinClick = () => {
+    this.props.joinGame(this.props.game.game);
   }
 
   render() {
@@ -28,18 +25,72 @@ class GameView extends Component {
         source={background}
         style={styles.container}
       >
-        <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.title} </Text>
-        </View>
-        <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.content} </Text>
-        </View>
-        <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.tags} </Text>
-        </View>
-        <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.cover_url} </Text>
-        </View>
+        <ScrollView>
+          <Text style={styles.name}>
+        Date
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.date} </Text>
+          </View>
+
+          <Text style={styles.name}>
+        Time
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.time} </Text>
+          </View>
+
+          <Text style={styles.name}>
+        Duration
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.duration} </Text>
+          </View>
+
+          <Text style={styles.name}>
+        Lat
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.lat} </Text>
+          </View>
+
+          <Text style={styles.name}>
+        Long
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.long} </Text>
+          </View>
+
+          <Text style={styles.name}>
+        Players_needed
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.players_needed} </Text>
+          </View>
+
+          <Text style={styles.name}>
+        Max_players
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.max_players} </Text>
+          </View>
+
+          <Text style={styles.name}>
+        Level
+          </Text>
+
+          <View style={styles.game}>
+            <Text style={styles.gameText}> {this.props.game.game.level} </Text>
+          </View>
+          <Button title="JOIN GAME" onPress={() => this.onJoinClick()} />
+        </ScrollView>
       </ImageBackground>
     );
   }
@@ -71,4 +122,4 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, { fetchGame })(GameView);
+export default connect(mapStateToProps, { fetchGame, joinGame })(GameView);

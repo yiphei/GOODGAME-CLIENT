@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const ROOT_URL = 'https://minitumblr.herokuapp.com/api';
+const ROOT_URL = 'https://good-game.herokuapp.com/api';
+// const ROOT_URL = 'http://localhost:9090/api'; // local testing
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
@@ -48,13 +49,21 @@ export function fetchGame(id) {
 export function createGame(post) {
   return (dispatch) => {
     const fields = {
-      title: post.title, content: post.content, tags: post.tags, cover_url: post.cover_url,
+      date: post.date,
+      time: post.time,
+      duration: post.duration,
+      lat: post.lat,
+      long: post.long,
+      players_needed: post.players_needed,
+      max_players: post.max_players,
+      level: post.level,
     };
     console.log(localStorage.getItem('token'));
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       console.log('in createGame');
       dispatch({ type: 'CREATE_POST', payload: null });
+      console.log(response.data);
       // dispatch({ type: 'CREATE_POST', payload: response.data });
     }).catch((error) => {
       console.log(error.response);
