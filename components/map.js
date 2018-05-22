@@ -14,10 +14,11 @@ import {
 import MapView from 'react-native-maps';
 
 const Images = [
-  { uri: 'https://i.imgur.com/sNam9iJ.jpg' },
-  { uri: 'https://i.imgur.com/N7rlQYt.jpg' },
-  { uri: 'https://i.imgur.com/UDrH0wm.jpg' },
-  { uri: 'https://i.imgur.com/Ka8kNST.jpg' },
+  { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/vrd9ryhalxTws/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/RsnFpEDtHjO48/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/sngOr8Y7O7uz6/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/KvTuvZjYiERHy/giphy.gif' },
 ];
 
 const { width, height } = Dimensions.get('window');
@@ -26,50 +27,58 @@ const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class screens extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props) {}
     this.state = {
       markers: [
         {
           coordinate: {
-            latitude: 45.524548,
-            longitude: -122.6749817,
+            latitude: 43.702828,
+            longitude: -72.284016,
           },
           title: 'Best Place',
-          description: 'This is the best place in Portland',
+          description: 'This is the best place in Hanover. Alumni Gym!',
           image: Images[0],
         },
         {
           coordinate: {
-            latitude: 45.524698,
-            longitude: -122.6655507,
+            latitude: 43.703001,
+            longitude: -72.284544,
           },
           title: 'Second Best Place',
-          description: 'This is the second best place in Portland',
+          description: 'This is the second best place in Hanover. Outside Alumni Gym!',
           image: Images[1],
         },
         {
           coordinate: {
-            latitude: 45.5230786,
-            longitude: -122.6701034,
+            latitude: 43.708547,
+            longitude: -72.284610,
           },
           title: 'Third Best Place',
-          description: 'This is the third best place in Portland',
+          description: 'This is the third best place in Hanover',
           image: Images[2],
         },
         {
           coordinate: {
-            latitude: 45.521016,
-            longitude: -122.6561917,
+            latitude: 43.707349,
+            longitude: -72.286280,
           },
           title: 'Fourth Best Place',
-          description: 'This is the fourth best place in Portland',
+          description: 'This is the fourth best place in Hanover',
           image: Images[3],
+        },
+        {
+          coordinate: {
+            latitude: 43.701922,
+            longitude: -72.292740,
+          },
+          title: 'Fifth Best Place',
+          description: 'This is the fifth best place in Hanover',
+          image: Images[4],
         },
       ],
       region: {
-        latitude: 45.52220671242907,
-        longitude: -122.6653281029795,
+        latitude: 43.7022928,
+        longitude: -72.2895353,
         latitudeDelta: 0.04864195044303443,
         longitudeDelta: 0.040142817690068,
       },

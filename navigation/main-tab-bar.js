@@ -9,7 +9,6 @@ import Ranking from '../components/ranking';
 import HomeTab from '../components/home-tab';
 import Map from '../components/map';
 
-
 const MainTabBar = createBottomTabNavigator(
   {
     HomeTab,
