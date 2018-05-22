@@ -27,61 +27,65 @@ const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class screens extends Component {
-  state = {
-    markers: [
-      {
-        coordinate: {
-          latitude: 43.702828,
-          longitude: -72.284016,
+  constructor(props) {}
+    this.state = {
+      markers: [
+        {
+          coordinate: {
+            latitude: 43.702828,
+            longitude: -72.284016,
+          },
+          title: 'Best Place',
+          description: 'This is the best place in Hanover. Alumni Gym!',
+          image: Images[0],
         },
-        title: 'Best Place',
-        description: 'This is the best place in Hanover. Alumni Gym!',
-        image: Images[0],
-      },
-      {
-        coordinate: {
-          latitude: 43.703001,
-          longitude: -72.284544,
+        {
+          coordinate: {
+            latitude: 43.703001,
+            longitude: -72.284544,
+          },
+          title: 'Second Best Place',
+          description: 'This is the second best place in Hanover. Outside Alumni Gym!',
+          image: Images[1],
         },
-        title: 'Second Best Place',
-        description: 'This is the second best place in Hanover. Outside Alumni Gym!',
-        image: Images[1],
-      },
-      {
-        coordinate: {
-          latitude: 43.708547,
-          longitude: -72.284610,
+        {
+          coordinate: {
+            latitude: 43.708547,
+            longitude: -72.284610,
+          },
+          title: 'Third Best Place',
+          description: 'This is the third best place in Hanover',
+          image: Images[2],
         },
-        title: 'Third Best Place',
-        description: 'This is the third best place in Hanover',
-        image: Images[2],
-      },
-      {
-        coordinate: {
-          latitude: 43.707349,
-          longitude: -72.286280,
+        {
+          coordinate: {
+            latitude: 43.707349,
+            longitude: -72.286280,
+          },
+          title: 'Fourth Best Place',
+          description: 'This is the fourth best place in Hanover',
+          image: Images[3],
         },
-        title: 'Fourth Best Place',
-        description: 'This is the fourth best place in Hanover',
-        image: Images[3],
-      },
-      {
-        coordinate: {
-          latitude: 43.701922,
-          longitude: -72.292740,
+        {
+          coordinate: {
+            latitude: 43.701922,
+            longitude: -72.292740,
+          },
+          title: 'Fifth Best Place',
+          description: 'This is the fifth best place in Hanover',
+          image: Images[4],
         },
-        title: 'Fifth Best Place',
-        description: 'This is the fifth best place in Hanover',
-        image: Images[4],
+      ],
+      region: {
+        latitude: 43.7022928,
+        longitude: -72.2895353,
+        latitudeDelta: 0.04864195044303443,
+        longitudeDelta: 0.040142817690068,
       },
-    ],
-    region: {
-      latitude: 43.7022928,
-      longitude: -72.2895353,
-      latitudeDelta: 0.04864195044303443,
-      longitudeDelta: 0.040142817690068,
-    },
-  };
+    };
+    this.markerClick = this.markerClick.bind(this);
+    this.createMarker = this.createMarker.bind(this);
+  }
 
   componentWillMount() {
     this.index = 0;
@@ -117,6 +121,16 @@ export default class screens extends Component {
     });
   }
 
+  markerClick() {
+    this.props.navigation.navigate('Home');
+  }
+
+  createMarker(e) {
+    // write point to database
+    console.log(e.nativeEvent.coordinate);
+    this.props.navigation.navigate('Home');
+  }
+
   render() {
     const interpolations = this.state.markers.map((marker, index) => {
       const inputRange = [
@@ -143,6 +157,7 @@ export default class screens extends Component {
           ref={map => this.map = map}
           initialRegion={this.state.region}
           style={styles.container}
+          onPress={event => this.createMarker(event)}
         >
           {this.state.markers.map((marker, index) => {
             const scaleStyle = {
@@ -156,7 +171,10 @@ export default class screens extends Component {
               opacity: interpolations[index].opacity,
             };
             return (
-              <MapView.Marker key={index} coordinate={marker.coordinate}>
+              <MapView.Marker key={index}
+                coordinate={marker.coordinate}
+                onPress={() => this.markerClick()}
+              >
                 <Animated.View style={[styles.markerWrap, opacityStyle]}>
                   <Animated.View style={[styles.ring, scaleStyle]} />
                   <View style={styles.marker} />
