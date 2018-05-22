@@ -1,7 +1,9 @@
+
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
+import { StyleSheet, ImageBackground, TextInput, Button, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { createGame } from '../actions';
+/* eslint-disable camelcase */
 
 const background = require('../img/court.png');
 
@@ -9,16 +11,36 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      content: '',
-      tags: '',
-      cover_url: '',
+      date: '',
+      time: '',
+      duration: '',
+      lat: 50,
+      long: 50,
+      players_needed: '',
+      max_players: '',
+      level: '',
+      // creator: '',
     };
     this.gameCreator = this.gameCreator.bind(this);
   }
+
   gameCreator() {
-    console.log(this.state);
-    this.props.createGame(this.state);
+    const game = {
+      date: this.state.date,
+      time: this.state.time,
+      duration: this.state.duration,
+      lat: this.state.lat,
+      long: this.state.long,
+      players_needed: this.state.players_needed,
+      max_players: this.state.max_players,
+      level: this.state.level,
+      // creator: this.state.creator,
+    };
+    console.log('creating game...');
+    this.props.createGame(game);
+
+    this.setState({});
+
     this.props.navigation.navigate('Home');
   }
 
@@ -28,25 +50,53 @@ class Home extends Component {
         source={background}
         style={styles.container}
       >
+        <Text style={styles.name}>
+        Date
+        </Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={title => this.setState({ title })}
-          value={this.state.title}
+          onChangeText={date => this.setState({ date })}
+          value={this.state.date}
         />
+        <Text style={styles.name}>
+        Time
+        </Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={content => this.setState({ content })}
-          value={this.state.content}
+          onChangeText={time => this.setState({ time })}
+          value={this.state.time}
         />
+        <Text style={styles.name}>
+        Duration
+        </Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={tags => this.setState({ tags })}
-          value={this.state.tags}
+          onChangeText={duration => this.setState({ duration })}
+          value={this.state.duration}
         />
+        <Text style={styles.name}>
+        Players needed
+        </Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={cover_url => this.setState({ cover_url })}
-          value={this.state.cover_url}
+          onChangeText={players_needed => this.setState({ players_needed })}
+          value={this.state.players_needed}
+        />
+        <Text style={styles.name}>
+        Max players
+        </Text>
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={max_players => this.setState({ max_players })}
+          value={this.state.max_players}
+        />
+        <Text style={styles.name}>
+        Level
+        </Text>
+        <TextInput
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={level => this.setState({ level })}
+          value={this.state.level}
         />
         <Button title="Submit" onPress={() => this.gameCreator()} />
       </ImageBackground>

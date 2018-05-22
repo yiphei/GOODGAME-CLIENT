@@ -20,7 +20,7 @@ class Home extends Component {
     const gameList = this.props.games.all.map(game =>
       (
         <View style={styles.game}>
-          <Text onPress={() => { this.showGameDetail(game); }} style={styles.gameText}> {game.title} </Text>
+          <Text onPress={() => { this.showGameDetail(game); }} style={styles.gameText}> {game.date} </Text>
         </View>
       ));
     return (
