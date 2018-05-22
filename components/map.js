@@ -27,7 +27,8 @@ const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
 export default class screens extends Component {
-  constructor(props) {}
+  constructor(props) {
+    super(props);
     this.state = {
       markers: [
         {
