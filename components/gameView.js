@@ -9,12 +9,14 @@ class GameView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _id: null,
-      title: null,
-      content: null,
-      tags: null,
-      cover_url: null,
-      isEditing: false,
+      date: '',
+      time: '',
+      duration: '',
+      lat: 50,
+      long: 50,
+      players_needed: '',
+      max_players: '',
+      level: '',
     };
   }
   componentDidMount() {
@@ -29,16 +31,12 @@ class GameView extends Component {
         style={styles.container}
       >
         <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.title} </Text>
-        </View>
-        <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.content} </Text>
-        </View>
-        <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.tags} </Text>
-        </View>
-        <View style={styles.game}>
-          <Text style={styles.gameText}> {this.props.game.game.cover_url} </Text>
+          <Text style={styles.gameText}> Date: {this.props.game.date} </Text>
+          <Text style={styles.gameText}> Time: {this.props.game.time} </Text>
+          <Text style={styles.gameText}> Duration: {this.props.game.duration} </Text>
+          <Text style={styles.gameText}> Players:{this.props.game.players} </Text>
+          <Text style={styles.gameText}> Max Players: {this.props.game.max_players} </Text>
+          <Text style={styles.gameText}> Skill Level: {this.props.game.level} </Text>
         </View>
       </ImageBackground>
     );
@@ -60,14 +58,14 @@ const styles = StyleSheet.create({
   },
   gameText: {
     fontFamily: 'Helvetica-Bold',
-    fontSize: 50,
+    fontSize: 30,
     color: 'red',
   },
 });
 
 const mapStateToProps = state => (
   {
-    game: state.games,
+    game: state.games.game,
   }
 );
 

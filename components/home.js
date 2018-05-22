@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, ImageBackground, View, Button, Animated, ScrollView } from 'react-native';
+import { Text, StyleSheet, ImageBackground, View, Button, Animated, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchGames } from '../actions';
 
@@ -19,9 +19,14 @@ class Home extends Component {
     console.log(this.props.games);
     const gameList = this.props.games.all.map(game =>
       (
-        <View style={styles.game}>
-          <Text onPress={() => { this.showGameDetail(game); }} style={styles.gameText}> {game.title} </Text>
-        </View>
+        <TouchableOpacity onPress={() => { this.showGameDetail(game); }} style={styles.game}>
+          <Text style={styles.gameText}> Date: {game.date} </Text>
+          <Text style={styles.gameText}> Time: {game.time} </Text>
+          <Text style={styles.gameText}> Duration: {game.duration} </Text>
+          <Text style={styles.gameText}> Players:{game.players} </Text>
+          <Text style={styles.gameText}> Max Players: {game.max_players} </Text>
+          <Text style={styles.gameText}> Skill Level: {game.level} </Text>
+        </TouchableOpacity>
       ));
     return (
       <Animated.ScrollView
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
   },
   gameText: {
     fontFamily: 'Helvetica-Bold',
-    fontSize: 50,
+    fontSize: 30,
     color: 'red',
   },
 });
