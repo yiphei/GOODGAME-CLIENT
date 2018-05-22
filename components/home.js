@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, ImageBackground, View, Button } from 'react-native';
+import { Text, StyleSheet, ImageBackground, View, Button, Animated, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchGames } from '../actions';
 
@@ -24,7 +24,26 @@ class Home extends Component {
         </View>
       ));
     return (
-      <Text style={styles.gameList} >{gameList}</Text>
+      <Animated.ScrollView
+        horizontal
+        scrollEventThrottle={1}
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={50}
+        onScroll={Animated.event(
+        [
+          {
+            nativeEvent: {
+              contentOffset: {
+                x: this.animation,
+              },
+            },
+          },
+        ],
+        { useNativeDriver: true },
+      )}
+        contentContainerStyle={styles.endPadding}
+      >{gameList}
+      </Animated.ScrollView>
     );
   }
 
@@ -34,10 +53,6 @@ class Home extends Component {
         source={background}
         style={styles.container}
       >
-        <Button title="Create Game"
-          style={styles.button}
-          onPress={() => this.props.navigation.navigate('CreateGame')}
-        />
         {this.renderGames()}
       </ImageBackground>
     );
@@ -50,15 +65,22 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined,
     backgroundColor: 'transparent',
-
   },
   gameList: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   game: {
+    width: 300,
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 20,
     borderRadius: 30,
     borderWidth: 10,
     borderColor: '#000000',
+    backgroundColor: '#99999944',
   },
   gameText: {
     fontFamily: 'Helvetica-Bold',
