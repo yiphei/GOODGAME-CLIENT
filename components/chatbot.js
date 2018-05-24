@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 const filterBotMessages = message => !message.system && message.user && message.user._id && message.user._id === 2;
 const findStep = step => (_, index) => index === step - 1;
 
-class Chat extends Component {
+class Chatbot extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -117,7 +117,7 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, null)(Chat);
+export default connect(mapStateToProps, null)(Chatbot);
 
 // <Button title="Login"
 //   style={styles.button}
