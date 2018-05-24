@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   footerText: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#aaa',
   },
 });
