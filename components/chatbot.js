@@ -55,15 +55,26 @@ class Evaluation extends Component {
 
   onSend(messages = []) {
     const step = this.state.step - 1;
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, [{ ...messages[0], sent: true, received: true }]),
-      step,
-    }));
-    console.log('our messages', messages);
+    console.log('step', step);
+
     if ((messages[0].text === 'Like') || (messages[0].text === 'Dislike')) {
-      console.log('You said like!');
-      setTimeout(() => this.botSendEval(step), 1500 + Math.round(Math.random() * 1000));
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, [{ ...messages[0], sent: true, received: true }]),
+        step,
+      }));
+
+      if (step < 0) {
+        setTimeout(() => this.botSend(7), 0);
+      } else {
+        console.log('our messages', messages);
+        console.log('You said like!');
+        setTimeout(() => this.botSendEval(step), 1500 + Math.round(Math.random() * 1000));
+      }
     } else {
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, [{ ...messages[0], sent: true, received: true }]),
+      }));
+
       console.log('Please say like or dislike!');
       setTimeout(() => this.botSend(6), 1500 + Math.round(Math.random() * 1000));
     }
