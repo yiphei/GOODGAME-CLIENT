@@ -204,18 +204,17 @@ export function signoutUser(history) {
 }
 
 
-export function fetchUser(id) {
+export function fetchUser() {
   return (dispatch) => {
     // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
-    console.log('fetchuser ', id);
-    axios.get(`${ROOT_URL}/users/${id}`).then((response) => {
+    console.log('in REACT fetchuser ');
+    axios.get(`${ROOT_URL}/user`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       console.log('in fetchuser', response.data);
       dispatch({ type: 'FETCH_USER', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchUser');
     });
   };
-}
 
 
 // export function fetchUsers() {
