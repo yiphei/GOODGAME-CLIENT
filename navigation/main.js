@@ -4,7 +4,7 @@ import Welcome from '../components/welcome';
 import Introduction from '../components/introduction';
 import Login from '../components/login';
 import SignUp from '../components/signup';
-import Home from '../components/home';
+// import Home from '../components/home';
 import CreateGame from '../components/createGame';
 import MainTabBar from './main-tab-bar';
 
