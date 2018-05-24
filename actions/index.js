@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const ROOT_URL = 'https://good-game.herokuapp.com/api';
+// const ROOT_URL = 'http://localhost:9090/api'; // local testing
 
 export const ActionTypes = {
   FETCH_POSTS: 'FETCH_POSTS',
@@ -62,6 +63,7 @@ export function createGame(post) {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       console.log('in createGame');
       dispatch({ type: 'CREATE_POST', payload: null });
+      console.log(response.data);
       // dispatch({ type: 'CREATE_POST', payload: response.data });
     }).catch((error) => {
       console.log(error.response);

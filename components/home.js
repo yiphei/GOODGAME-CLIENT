@@ -29,26 +29,29 @@ class Home extends Component {
         </TouchableOpacity>
       ));
     return (
-      <Animated.ScrollView
-        horizontal
-        scrollEventThrottle={1}
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={50}
-        onScroll={Animated.event(
-        [
-          {
-            nativeEvent: {
-              contentOffset: {
-                x: this.animation,
+      <View>
+        <Text style={styles.topDescription}> Your games </Text>
+        <Animated.ScrollView
+          horizontal
+          scrollEventThrottle={1}
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={50}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: this.animation,
+                  },
+                },
               },
-            },
-          },
-        ],
-        { useNativeDriver: true },
-      )}
-        contentContainerStyle={styles.endPadding}
-      >{gameList}
-      </Animated.ScrollView>
+            ],
+            { useNativeDriver: true },
+          )}
+          contentContainerStyle={styles.endPadding}
+        >{gameList}
+        </Animated.ScrollView>
+      </View>
     );
   }
 
@@ -67,9 +70,18 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: undefined,
     height: undefined,
     backgroundColor: 'transparent',
+  },
+  topDescription: {
+    height: 60,
+    backgroundColor: '#FF0000BB',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
   gameList: {
     flex: 1,

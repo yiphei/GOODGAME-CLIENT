@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text, StyleSheet, ImageBackground, View, Button } from 'react-native';
-import { fetchGame } from '../actions/index';
+import { Text, StyleSheet, ImageBackground, View, Button, ScrollView } from 'react-native';
+import { fetchGame, joinGame } from '../actions/index';
 
 const background = require('../img/court.png');
 
 class GameView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: '',
-      time: '',
-      duration: '',
-      lat: 50,
-      long: 50,
-      players_needed: '',
-      max_players: '',
-      level: '',
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
+
   componentDidMount() {
     console.log('post componentdidmount', this.props.navigation.state.params.game._id);
     this.props.fetchGame(this.props.navigation.state.params.game._id);
+  }
+
+  onJoinClick = () => {
+    this.props.joinGame(this.props.game.game);
   }
 
   render() {
@@ -46,15 +41,22 @@ class GameView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    resizeMode: 'cover',
     width: undefined,
     height: undefined,
     backgroundColor: 'transparent',
-
+  },
+  topDescription: {
+    height: 60,
+    backgroundColor: '#FF0000BB',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
   game: {
     borderRadius: 30,
     borderWidth: 10,
     borderColor: '#000000',
+    backgroundColor: '#99999944',
   },
   gameText: {
     fontFamily: 'Helvetica-Bold',
@@ -69,4 +71,4 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, { fetchGame })(GameView);
+export default connect(mapStateToProps, { fetchGame, joinGame })(GameView);
