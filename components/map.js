@@ -10,8 +10,9 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-
 import MapView from 'react-native-maps';
+import { connect } from 'react-redux';
+import { fetchCourts } from '../actions';
 
 const Images = [
   { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
@@ -26,7 +27,7 @@ const { width, height } = Dimensions.get('window');
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
 
-export default class screens extends Component {
+class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,6 +94,7 @@ export default class screens extends Component {
     this.animation = new Animated.Value(0);
   }
   componentDidMount() {
+    this.props.fetchCourts();
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
@@ -128,8 +130,10 @@ export default class screens extends Component {
 
   createMarker(e) {
     // write point to database
+    console.log(this.props.courts.all);
     console.log(e.nativeEvent.coordinate);
     this.props.navigation.navigate('Home');
+    console.log(this.props.courts.all);
   }
 
   render() {
@@ -291,4 +295,12 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('mapfocus', () => screens);
+const mapStateToProps = state => (
+  {
+    courts: state.courts,
+  }
+);
+
+export default connect(mapStateToProps, { fetchCourts })(Map);
+
+// AppRegistry.registerComponent('mapfocus', () => screens);

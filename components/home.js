@@ -14,7 +14,6 @@ class Home extends Component {
     this.props.navigation.navigate('GameView', { game });
   }
 
-
   renderGames() {
     console.log(this.props.games);
     const gameList = this.props.games.all.map(game =>

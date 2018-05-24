@@ -14,7 +14,6 @@ const MainTabBar = createBottomTabNavigator(
   {
     HomeTab,
     CreateGame,
-    Ranking,
     Profile,
     Map,
     Chatbot,
