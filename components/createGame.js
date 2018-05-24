@@ -1,7 +1,9 @@
+
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TextInput, Button, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { createGame } from '../actions';
+/* eslint-disable camelcase */
 
 const background = require('../img/court.png');
 
@@ -17,6 +19,7 @@ class Home extends Component {
       players_needed: '',
       max_players: '',
       level: '',
+      // creator: '',
     };
     this.gameCreator = this.gameCreator.bind(this);
   }
@@ -31,6 +34,7 @@ class Home extends Component {
       players_needed: this.state.players_needed,
       max_players: this.state.max_players,
       level: this.state.level,
+      // creator: this.state.creator,
     };
     console.log('creating game...');
     this.props.createGame(game);

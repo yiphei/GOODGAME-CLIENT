@@ -6,9 +6,9 @@ import { fetchGame, joinGame } from '../actions/index';
 const background = require('../img/court.png');
 
 class GameView extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     console.log('post componentdidmount', this.props.navigation.state.params.game._id);
