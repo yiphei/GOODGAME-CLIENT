@@ -29,7 +29,7 @@ class Home extends Component {
       ));
     return (
       <View>
-        <Text style={styles.topDescription}> Games </Text>
+        <Text style={styles.topDescription}> Your games </Text>
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}

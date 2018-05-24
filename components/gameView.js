@@ -17,7 +17,8 @@ class GameView extends Component {
 
   onJoinClick = () => {
     this.props.joinGame(this.props.navigation.state.params.game._id, this.props.navigation.state.params.game);
-    this.props.navigation.navigate('Home');
+    // this.props.userJoinGame()
+    // this.props.navigation.navigate('Home');
   }
 
   onDeleteClick = () => {
