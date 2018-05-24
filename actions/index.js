@@ -12,7 +12,48 @@ export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
+  JOIN_GAME: 'JOIN_GAME',
+  FETCH_USER: 'FETCH_USER',
+  FETCH_USERS: 'FETCH_USERS',
 };
+
+// axios PUT
+export function updateGame(game) {
+  return (dispatch) => {
+    const id = game._id;
+    const fields = {
+      id: game._id, title: game.title, content: game.content, tags: game.tags, cover_url: game.cover_url,
+    };
+    console.log(game);
+    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
+    axios.put(`${ROOT_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      console.log('in updatePost', response.data);
+      fetchGames();
+      dispatch({ type: 'UPDATE_POST', payload: game });
+    }).catch((error) => {
+      console.log('error occured during updatePost');
+    });
+  };
+}
+
+export function joinGame(id, game) {
+  console.log('Inside join game');
+  console.log(game);
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/posts/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    // do something with response.data  (some json)
+      console.log(response);
+      dispatch({
+        type: ActionTypes.UPDATE_POST,
+        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
+      });
+    }).catch((error) => {
+    // hit an error do something else!
+      console.log('error');
+    });
+  };
+}
+
 
 export function fetchGames() {
   // Action Creator returns a function
@@ -58,6 +99,8 @@ export function createGame(post) {
       max_players: post.max_players,
       level: post.level,
     };
+    console.log('INSIDE');
+    console.log(fields);
     console.log(localStorage.getItem('token'));
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
@@ -72,13 +115,12 @@ export function createGame(post) {
 }
 
 // axios DELETE
-export function deletePost(id, history) {
+export function deleteGame(id) {
   return (dispatch) => {
     // axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
     axios.delete(`${ROOT_URL}/posts/${id}`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       console.log('in deletePost');
-      history.push('/'); // navigate back to another page
-      fetchGames();
+      // fetchGames();
       dispatch({ type: 'DELETE_POST', payload: null });
     }).catch((error) => {
       console.log('error occured during fetchPosts');
@@ -86,24 +128,6 @@ export function deletePost(id, history) {
   };
 }
 
-// axios PUT
-export function updateGame(game) {
-  return (dispatch) => {
-    const id = game._id;
-    const fields = {
-      id: game._id, title: game.title, content: game.content, tags: game.tags, cover_url: game.cover_url,
-    };
-    console.log(game);
-    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
-    axios.put(`${ROOT_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      console.log('in updatePost', response.data);
-      fetchGames();
-      dispatch({ type: 'UPDATE_POST', payload: game });
-    }).catch((error) => {
-      console.log('error occured during updatePost');
-    });
-  };
-}
 
 export function authError(error) {
   return {
@@ -161,3 +185,35 @@ export function signoutUser(history) {
     history.push('/');
   };
 }
+
+
+export function fetchUser(id) {
+  return (dispatch) => {
+    // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+    console.log('fetchuser ', id);
+    axios.get(`${ROOT_URL}/users/${id}`).then((response) => {
+      console.log('in fetchuser', response.data);
+      dispatch({ type: 'FETCH_USER', payload: response.data });
+    }).catch((error) => {
+      console.log('error occured during fetchUser');
+    });
+  };
+}
+
+
+// export function fetchUsers() {
+//   // Action Creator returns a function
+//   // that gets called b the middleware passing in dispatch to it as an arg
+//   return (dispatch) => {
+//     // axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+//     axios.get(`${ROOT_URL}/users`).then((response) => {
+//       // response.data is a json file
+//       console.log('in fetchUsers', response.data);
+//       dispatch({ type: 'FETCH_USERS', payload: response.data });
+//     }).catch((error) => {
+//       console.log('error occured during fechUsers');
+//     });
+//     // on the completion we will dispatch an action
+//     // can now dispatch stuff
+//   };
+// }
