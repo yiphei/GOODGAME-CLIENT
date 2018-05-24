@@ -66,12 +66,24 @@ export default [
   },
   {
     _id: Math.round(Math.random() * 1000000),
-    text: 'Please either say like or dislike to your fellow players!',
+    text: 'Please either say Like or Dislike to your fellow players!',
     createdAt: new Date(),
     user: {
       _id: 2,
       name: 'React Native',
     },
+    sent: true,
+    received: true,
+  },
+  {
+    _id: Math.round(Math.random() * 1000000),
+    text: 'Thank you for rating all your fellow player!',
+    createdAt: new Date(),
+    user: {
+      _id: 2,
+      name: 'React Native',
+    },
+    image: 'https://cdn-s3.si.com/s3fs-public/2017/11/02/lebron-james-cavs-reaction.jpg',
     sent: true,
     received: true,
   },
