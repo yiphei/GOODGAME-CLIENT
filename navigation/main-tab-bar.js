@@ -8,7 +8,7 @@ import Profile from '../components/profile';
 import Ranking from '../components/ranking';
 import HomeTab from '../components/home-tab';
 import Map from '../components/map';
-import Chatbot from '../components/chatbot';
+import Evaluation from '../components/chatbot';
 
 const MainTabBar = createBottomTabNavigator(
   {
@@ -16,7 +16,7 @@ const MainTabBar = createBottomTabNavigator(
     CreateGame,
     Profile,
     Map,
-    Chatbot,
+    Evaluation,
   },
   {
     initialRouteName: 'HomeTab',
