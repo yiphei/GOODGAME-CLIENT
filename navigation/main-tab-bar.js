@@ -12,15 +12,14 @@ import Evaluation from '../components/chatbot';
 
 const MainTabBar = createBottomTabNavigator(
   {
-    HomeTab,
+    Home,
     CreateGame,
-    Ranking,
     Profile,
     Map,
     Evaluation,
   },
   {
-    initialRouteName: 'HomeTab',
+    initialRouteName: 'Home',
   },
 );
 

@@ -17,7 +17,7 @@ class Login extends Component {
   signIn() {
     console.log(this.state);
     this.props.signinUser(this.state); // not sure that you can passin this.state directly
-    this.props.navigation.navigate('Chat');
+    this.props.navigation.navigate('Home');
   }
 
   render() {

@@ -15,7 +15,6 @@ class Home extends Component {
   }
 
   renderGames() {
-    this.props.fetchGames();
     console.log(this.props.games);
     const gameList = this.props.games.all.map(game =>
       (
@@ -30,7 +29,7 @@ class Home extends Component {
       ));
     return (
       <View>
-        <Text style={styles.topDescription}> Games </Text>
+        <Text style={styles.topDescription}> Your games </Text>
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
