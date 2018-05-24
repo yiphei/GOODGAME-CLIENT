@@ -27,21 +27,28 @@ class GameView extends Component {
   }
 
 
-  // renderPlayers = (list_players) => {
-  //   console.log('here');
-  //   console.log(this.props.game.players_list);
-  //   console.log('befopre');
-  //
-  //   return this.props.game.players_list.map((player) => {
-  //     console.log(player.username);
-  //     return (
-  //       <div>
-  //         <Text style={styles.gameText}> {player.username} </Text>
-  //       </div>
-  //     );
-  //   });
-  // }
-  // {this.renderPlayers(this.props.game.players_list)}
+  renderPlayers = () => {
+    console.log('here');
+    console.log(this.props.game.players_list);
+    console.log('befopre');
+
+    if (this.props.game.players_list) {
+      console.log(this.props.game.author);
+      console.log('TTTTTT');
+
+
+      return this.props.game.players_list.map((player) => {
+        console.log(player);
+        return (
+          <div>
+            <Text style={styles.gameText}> {player.handle} </Text>
+          </div>
+        );
+      });
+    } else {
+      console.log('loading...');
+    }
+  }
 
 
   render() {
@@ -59,6 +66,7 @@ class GameView extends Component {
             <Text style={styles.gameText}> Max Players: {this.props.game.max_players} </Text>
             <Text style={styles.gameText}> Skill Level: {this.props.game.level} </Text>
             <Text style={styles.gameText}> Players: {this.props.game.players_list}</Text>
+            {this.renderPlayers()}
             <Button title="Join Game" onPress={() => this.onJoinClick()} />
             <Button title="Delete Game" onPress={() => this.onDeleteClick()} />
           </View>
