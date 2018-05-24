@@ -18,7 +18,7 @@ const Main = createStackNavigator(
     MainTabBar,
   },
   {
-    initialRouteName: 'Welcome',
+    initialRouteName: 'Login',
   },
 );
 
