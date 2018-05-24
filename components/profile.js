@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TextInput, Button, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
+import { fetchUser } from '../actions/index';
+
 
 const background = require('../img/court.png');
 const player = require('../img/player1.png');
@@ -11,8 +13,7 @@ class Profile extends Component {
   }
 
   componentDidMount = () => {
-
-  // need a fetchUser here
+    this.props.fetchUser();
   }
 
 
@@ -24,7 +25,7 @@ class Profile extends Component {
       >
         <Image source={require('../img/player1.png')} />
         <Text style={styles.name}>
-        Yifei Yan
+          {this.props.user.handle}
         </Text>
 
         <Text style={styles.stats}>
@@ -74,11 +75,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
   {
-    auth: state.auth,
+    user: state.user.user,
   }
 );
 
-export default connect(mapStateToProps, null)(Profile);
+export default connect(mapStateToProps, { fetchUser })(Profile);
 
 // <Button title="Login"
 //   style={styles.button}
