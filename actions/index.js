@@ -103,7 +103,6 @@ export function fetchGame(id) {
   };
 }
 
-
 export function createGame(post) {
   return (dispatch) => {
     const fields = {
