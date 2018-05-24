@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 
 import messagesData from './chatbot/data';
+import gameData from './chatbot/gameSimulation';
 import NavBar from './chatbot/NavBar';
 import CustomView from './chatbot/CustomView';
 
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
 const filterBotMessages = message => !message.system && message.user && message.user._id && message.user._id === 2;
 const findStep = step => (_, index) => index === step - 1;
 
-class Chatbot extends Component {
+class Evaluation extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,15 +46,38 @@ class Chatbot extends Component {
   componentWillMount() {
     // init with only system messages
     this.setState({ messages: messagesData.filter(message => message.system) });
+    const game = gameData;
+    console.log(game.playersSignedUp);
+    this.setState({ step: game.playersSignedUp.length - 1 });
+    setTimeout(() => this.botSend(1), 0);
+    setTimeout(() => this.botSendEval(game.playersSignedUp.length - 1), 1000 + Math.round(Math.random() * 1000));
   }
 
   onSend(messages = []) {
-    const step = this.state.step + 1;
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, [{ ...messages[0], sent: true, received: true }]),
-      step,
-    }));
-    setTimeout(() => this.botSend(step), 1500 + Math.round(Math.random() * 1000));
+    const step = this.state.step - 1;
+    console.log('step', step);
+
+    if ((messages[0].text === 'Like') || (messages[0].text === 'Dislike')) {
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, [{ ...messages[0], sent: true, received: true }]),
+        step,
+      }));
+
+      if (step < 0) {
+        setTimeout(() => this.botSend(7), 0);
+      } else {
+        console.log('our messages', messages);
+        console.log('You said like!');
+        setTimeout(() => this.botSendEval(step), 1500 + Math.round(Math.random() * 1000));
+      }
+    } else {
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, [{ ...messages[0], sent: true, received: true }]),
+      }));
+
+      console.log('Please say like or dislike!');
+      setTimeout(() => this.botSend(6), 1500 + Math.round(Math.random() * 1000));
+    }
   }
 
   botSend(step = 0) {
@@ -68,8 +92,54 @@ class Chatbot extends Component {
     }
   }
 
+  botSendEval(step = 0) {
+    const newMessage = {
+      _id: Math.round(Math.random() * 1000000),
+      text: 'Time to rate your fellow players! Type Like or Dislike for Savanah!',
+      createdAt: new Date(),
+      user: {
+        _id: 2,
+        name: 'React Native',
+      },
+      sent: true,
+      received: true,
+    };
+
+    if (newMessage) {
+      const game = gameData;
+      console.log(game.playersSignedUp);
+      const tempPlayerName = game.playersSignedUp[step];
+      newMessage.text = `Time to rate your fellow players! Type Like or Dislike for ${tempPlayerName}`;
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, newMessage),
+      }));
+    }
+  }
+
+  // botSendWarning(step = 0) {
+  //   const newMessage = messagesData
+  //     // .reverse()
+  //     .filter(filterBotMessages)
+  //     .find(findStep(step));
+  //   if (newMessage) {
+  //     this.setState(previousState => ({
+  //       messages: GiftedChat.append(previousState.messages, newMessage),
+  //     }));
+  //   }
+  // }
+
   parsePatterns(linkStyle) {
     return [
+      {
+        pattern: /Like/,
+        style: { ...linkStyle, color: 'pink' },
+        onPress: () => Linking.openURL('http://gifted.chat'),
+      },
+      {
+        pattern: /Dislike/,
+        style: { ...linkStyle, color: 'red' },
+        onPress: () => Linking.openURL('http://gifted.chat'),
+      },
       {
         pattern: /#(\w+)/,
         style: { ...linkStyle, color: 'orange' },
@@ -77,6 +147,17 @@ class Chatbot extends Component {
       },
     ];
   }
+
+
+  // parsePatterns_eval(linkStyle) {
+  //   return [
+  //     {
+  //       pattern: /#(\w+)/,
+  //       style: { ...linkStyle, color: 'orange' },
+  //       onPress: () => Linking.openURL('http://gifted.chat'),
+  //     },
+  //   ];
+  // }
 
   renderFooter(props) {
     if (this.state.typingText) {
@@ -104,6 +185,7 @@ class Chatbot extends Component {
             _id: 1,
           }}
           parsePatterns={this.parsePatterns}
+
         />
       </View>
     );
@@ -117,7 +199,7 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, null)(Chatbot);
+export default connect(mapStateToProps, null)(Evaluation);
 
 // <Button title="Login"
 //   style={styles.button}

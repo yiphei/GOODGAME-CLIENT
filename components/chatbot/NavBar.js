@@ -6,7 +6,7 @@ export default function NavBarCustom() {
   return (
     <NavBar>
       <NavButton />
-      <NavTitle>💬 Gifted Chat</NavTitle>
+      <NavTitle> 🏀🏀🏀 Post Game Evaluation 🏀🏀🏀</NavTitle>
       <NavButton />
     </NavBar>
   );
