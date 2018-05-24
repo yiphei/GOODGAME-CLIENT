@@ -215,7 +215,7 @@ export function fetchUser() {
       console.log('error occured during fetchUser');
     });
   };
-
+}
 
 // export function fetchUsers() {
 //   // Action Creator returns a function
