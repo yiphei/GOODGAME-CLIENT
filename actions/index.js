@@ -17,6 +17,23 @@ export const ActionTypes = {
   FETCH_USERS: 'FETCH_USERS',
 };
 
+export function fetchGames() {
+  // Action Creator returns a function
+  // that gets called b the middleware passing in dispatch to it as an arg
+  return (dispatch) => {
+    // axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+    axios.get(`${ROOT_URL}/posts`).then((response) => {
+      // response.data is a json file
+      console.log('in fetchGames', response.data);
+      dispatch({ type: 'FETCH_POSTS', payload: response.data });
+    }).catch((error) => {
+      console.log('error occured during fetchPosts');
+    });
+    // on the completion we will dispatch an action
+    // can now dispatch stuff
+  };
+}
+
 // axios PUT
 export function updateGame(game) {
   return (dispatch) => {
@@ -54,24 +71,6 @@ export function joinGame(id, game) {
   };
 }
 
-
-export function fetchGames() {
-  // Action Creator returns a function
-  // that gets called b the middleware passing in dispatch to it as an arg
-  return (dispatch) => {
-    // axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
-    axios.get(`${ROOT_URL}/posts`).then((response) => {
-      // response.data is a json file
-      console.log('in fetchGames', response.data);
-      dispatch({ type: 'FETCH_POSTS', payload: response.data });
-    }).catch((error) => {
-      console.log('error occured during fetchPosts');
-    });
-    // on the completion we will dispatch an action
-    // can now dispatch stuff
-  };
-}
-
 // axios GET
 export function fetchGame(id) {
   return (dispatch) => {
@@ -105,6 +104,7 @@ export function createGame(post) {
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       console.log('in createGame');
+      fetchGames();
       dispatch({ type: 'CREATE_POST', payload: null });
       console.log(response.data);
       // dispatch({ type: 'CREATE_POST', payload: response.data });
