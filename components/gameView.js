@@ -25,72 +25,14 @@ class GameView extends Component {
         source={background}
         style={styles.container}
       >
-        <ScrollView>
-          <Text style={styles.name}>
-        Date
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.date} </Text>
-          </View>
-
-          <Text style={styles.name}>
-        Time
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.time} </Text>
-          </View>
-
-          <Text style={styles.name}>
-        Duration
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.duration} </Text>
-          </View>
-
-          <Text style={styles.name}>
-        Lat
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.lat} </Text>
-          </View>
-
-          <Text style={styles.name}>
-        Long
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.long} </Text>
-          </View>
-
-          <Text style={styles.name}>
-        Players_needed
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.players_needed} </Text>
-          </View>
-
-          <Text style={styles.name}>
-        Max_players
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.max_players} </Text>
-          </View>
-
-          <Text style={styles.name}>
-        Level
-          </Text>
-
-          <View style={styles.game}>
-            <Text style={styles.gameText}> {this.props.game.game.level} </Text>
-          </View>
-          <Button title="JOIN GAME" onPress={() => this.onJoinClick()} />
-        </ScrollView>
+        <View style={styles.game}>
+          <Text style={styles.gameText}> Date: {this.props.game.date} </Text>
+          <Text style={styles.gameText}> Time: {this.props.game.time} </Text>
+          <Text style={styles.gameText}> Duration: {this.props.game.duration} </Text>
+          <Text style={styles.gameText}> Players:{this.props.game.players} </Text>
+          <Text style={styles.gameText}> Max Players: {this.props.game.max_players} </Text>
+          <Text style={styles.gameText}> Skill Level: {this.props.game.level} </Text>
+        </View>
       </ImageBackground>
     );
   }
@@ -99,26 +41,33 @@ class GameView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    resizeMode: 'cover',
     width: undefined,
     height: undefined,
     backgroundColor: 'transparent',
-
+  },
+  topDescription: {
+    height: 60,
+    backgroundColor: '#FF0000BB',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
   game: {
     borderRadius: 30,
     borderWidth: 10,
     borderColor: '#000000',
+    backgroundColor: '#99999944',
   },
   gameText: {
     fontFamily: 'Helvetica-Bold',
-    fontSize: 50,
+    fontSize: 30,
     color: 'red',
   },
 });
 
 const mapStateToProps = state => (
   {
-    game: state.games,
+    game: state.games.game,
   }
 );
 

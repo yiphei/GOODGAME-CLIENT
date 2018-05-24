@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, ImageBackground, View, Button } from 'react-native';
+import { Text, StyleSheet, ImageBackground, View, Button, Animated, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchGames } from '../actions';
 
@@ -19,12 +19,39 @@ class Home extends Component {
     console.log(this.props.games);
     const gameList = this.props.games.all.map(game =>
       (
-        <View style={styles.game}>
-          <Text onPress={() => { this.showGameDetail(game); }} style={styles.gameText}> {game.date} </Text>
-        </View>
+        <TouchableOpacity onPress={() => { this.showGameDetail(game); }} style={styles.game}>
+          <Text style={styles.gameText}> Date: {game.date} </Text>
+          <Text style={styles.gameText}> Time: {game.time} </Text>
+          <Text style={styles.gameText}> Duration: {game.duration} </Text>
+          <Text style={styles.gameText}> Players:{game.players} </Text>
+          <Text style={styles.gameText}> Max Players: {game.max_players} </Text>
+          <Text style={styles.gameText}> Skill Level: {game.level} </Text>
+        </TouchableOpacity>
       ));
     return (
-      <Text style={styles.gameList} >{gameList}</Text>
+      <View>
+        <Text style={styles.topDescription}> Your games </Text>
+        <Animated.ScrollView
+          horizontal
+          scrollEventThrottle={1}
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={50}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: this.animation,
+                  },
+                },
+              },
+            ],
+            { useNativeDriver: true },
+          )}
+          contentContainerStyle={styles.endPadding}
+        >{gameList}
+        </Animated.ScrollView>
+      </View>
     );
   }
 
@@ -34,10 +61,6 @@ class Home extends Component {
         source={background}
         style={styles.container}
       >
-        <Button title="Create Game"
-          style={styles.button}
-          onPress={() => this.props.navigation.navigate('CreateGame')}
-        />
         {this.renderGames()}
       </ImageBackground>
     );
@@ -47,22 +70,38 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: undefined,
     height: undefined,
     backgroundColor: 'transparent',
-
+  },
+  topDescription: {
+    height: 60,
+    backgroundColor: '#FF0000BB',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
   gameList: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   game: {
+    width: 300,
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 20,
     borderRadius: 30,
     borderWidth: 10,
     borderColor: '#000000',
+    backgroundColor: '#99999944',
   },
   gameText: {
     fontFamily: 'Helvetica-Bold',
-    fontSize: 50,
+    fontSize: 30,
     color: 'red',
   },
 });
