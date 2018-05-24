@@ -57,8 +57,14 @@ const styles = StyleSheet.create({
     flex: 1,
     width: undefined,
     height: undefined,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'transparent',
 
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 30,
   },
   button: {
     flex: 1,
