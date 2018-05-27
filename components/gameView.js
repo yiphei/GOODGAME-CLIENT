@@ -40,9 +40,9 @@ class GameView extends Component {
       return this.props.game.players_list.map((player) => {
         console.log(player);
         return (
-          <div>
+          <View>
             <Text style={styles.gameText}> {player.handle} </Text>
-          </div>
+          </View>
         );
       });
     } else {
