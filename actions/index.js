@@ -16,6 +16,7 @@ export const ActionTypes = {
   JOIN_GAME: 'JOIN_GAME',
   FETCH_USER: 'FETCH_USER',
   FETCH_USERS: 'FETCH_USERS',
+  UPDATE_POSTGAMEVALUTAION: 'UPDATE_POSTGAMEVALUTAION',
 };
 
 export function fetchCourts() {
@@ -70,6 +71,27 @@ export function updateGame(game) {
     });
   };
 }
+
+// Update postGameEvaluation - Ally
+export function updatePostGameEvaluation(game, postGameEval) {
+  return (dispatch) => {
+    const id = game._id;
+    const fields = {
+      postGameEvaluation: postGameEval,
+    };
+    console.log('post game eval in actions/index.js', fields);
+    console.log(game);
+    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
+    axios.put(`${ROOT_URL}/postss/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      console.log('in updatePost', response.data);
+      fetchGames();
+      dispatch({ type: 'UPDATE_POSTGAMEVALUATION', payload: game });
+    }).catch((error) => {
+      console.log('error occured during updatePostGameEvaluation');
+    });
+  };
+}
+
 
 export function joinGame(id, game) {
   console.log('Inside join game');

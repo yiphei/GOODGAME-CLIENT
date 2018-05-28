@@ -128,6 +128,24 @@ class Evaluation extends Component {
   //   }
   // }
 
+  // TODO: link this with a selected game
+  sendPostGameEvaluation() {
+    const postGameEvaluation = {
+      playerId: 'player 2',
+      evaluations: {
+        'player 1': 'Dislike', 'player 3': 'Dislike', 'player 4': 'Like', 'player 5': 'Like',
+      },
+    };
+
+
+    console.log('updating gameGameEvalution...');
+    this.props.updatePostGameEvaluation(this.props.navigation.state.params.game, postGameEvaluation);
+
+    this.setState({});
+
+    this.props.navigation.navigate('Home');
+  }
+
   parsePatterns(linkStyle) {
     return [
       {
