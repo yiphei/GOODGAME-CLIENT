@@ -14,6 +14,8 @@ import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import { fetchCourts } from '../actions';
 
+/* eslint-disable react/no-array-index-key  */
+
 const Images = [
   { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
   { uri: 'https://media.giphy.com/media/vrd9ryhalxTws/giphy.gif' },
@@ -29,54 +31,92 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 
 class Map extends Component {
   constructor(props) {
+    console.log('constructor');
     super(props);
     this.state = {
-      markers: [
+      selectedMarker: {
+        // lat: 43.702828,
+        // long: -72.284016,
+
+        coordinate: {
+          latitude: 43.702828,
+          longitude: -72.284016,
+        },
+        title: 'Alumni Gym',
+        // description: 'This is the best place in Hanover. Alumni Gym!',
+        // image: Images[0],
+        game_list: [
+          {
+            _id: '5b0b4b74b74f9900392a2842',
+            date: '05/18/18',
+            time: 'ZZZZ',
+            duration: 4,
+            players_needed: 4,
+            max_players: 4,
+            level: 4,
+          },
+        ],
+      },
+      markers: [ // courts
         {
+          // lat: 43.702828,
+          // long: -72.284016,
+
           coordinate: {
             latitude: 43.702828,
             longitude: -72.284016,
           },
-          title: 'Best Place',
-          description: 'This is the best place in Hanover. Alumni Gym!',
-          image: Images[0],
+          title: 'Alumni Gym',
+          // description: 'This is the best place in Hanover. Alumni Gym!',
+          // image: Images[0],
+          game_list: [
+            {
+              _id: '5b0b4b74b74f9900392a2842',
+              date: '05/18/18',
+              time: 'ZZZZ',
+              duration: 4,
+              players_needed: 4,
+              max_players: 4,
+              level: 4,
+            },
+          ],
         },
-        {
-          coordinate: {
-            latitude: 43.703001,
-            longitude: -72.284544,
-          },
-          title: 'Second Best Place',
-          description: 'This is the second best place in Hanover. Outside Alumni Gym!',
-          image: Images[1],
-        },
-        {
-          coordinate: {
-            latitude: 43.708547,
-            longitude: -72.284610,
-          },
-          title: 'Third Best Place',
-          description: 'This is the third best place in Hanover',
-          image: Images[2],
-        },
-        {
-          coordinate: {
-            latitude: 43.707349,
-            longitude: -72.286280,
-          },
-          title: 'Fourth Best Place',
-          description: 'This is the fourth best place in Hanover',
-          image: Images[3],
-        },
-        {
-          coordinate: {
-            latitude: 43.701922,
-            longitude: -72.292740,
-          },
-          title: 'Fifth Best Place',
-          description: 'This is the fifth best place in Hanover',
-          image: Images[4],
-        },
+        // {
+        //   coordinate: {
+        //     latitude: 43.703001,
+        //     longitude: -72.284544,
+        //   },
+        //   title: 'Second Best Place',
+        //   description: 'This is the second best place in Hanover. Outside Alumni Gym!',
+        //   image: Images[1],
+        // },
+        // {
+        //   coordinate: {
+        //     latitude: 43.708547,
+        //     longitude: -72.284610,
+        //   },
+        //   title: 'Third Best Place',
+        //   description: 'This is the third best place in Hanover',
+        //   image: Images[2],
+        // },
+        // {
+        //   coordinate: {
+        //     latitude: 43.707349,
+        //     longitude: -72.286280,
+        //   },
+        //   title: 'Fourth Best Place',
+        //   description: 'This is the fourth best place in Hanover',
+        //   image: Images[3],
+        // },
+        // {
+        //   coordinate: {
+        //     latitude: 43.701922,
+        //     longitude: -72.292740,
+        //   },
+        //   title: 'Fifth Best Place',
+        //   description: 'This is the fifth best place in Hanover',
+        //   image: Images[4],
+        // },
       ],
       region: {
         latitude: 43.7022928,
@@ -90,11 +130,15 @@ class Map extends Component {
   }
 
   componentWillMount() {
+    console.log('componentwillmount');
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
   componentDidMount() {
+    console.log('componentdidmount');
     this.props.fetchCourts();
+    // this.setState({ markers: this.props.courts.all });
+
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
@@ -102,10 +146,17 @@ class Map extends Component {
       if (index >= this.state.markers.length) {
         index = this.state.markers.length - 1;
       }
+
+      // // This for cards, right?
+      // if (index >= this.state.selectedMarker.game_list.length) {
+      //   index = this.state.selectedMarker.game_list.length - 1;
+      // }
+
       if (index <= 0) {
         index = 0;
       }
 
+      // for markers?
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
@@ -124,8 +175,10 @@ class Map extends Component {
     });
   }
 
-  markerClick() {
-    this.props.navigation.navigate('Home');
+  markerClick(marker) {
+    console.log('markerClick');
+    // this.props.navigation.navigate('Home');
+    this.setState({ selectedMarker: marker });
   }
 
   createMarker(e) {
@@ -137,7 +190,11 @@ class Map extends Component {
   }
 
   render() {
+    console.log('render');
+
+    // for each card?
     const interpolations = this.state.markers.map((marker, index) => {
+    // const interpolations = this.state.selectedMarker.game_list.map((game, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
         index * CARD_WIDTH,
@@ -155,7 +212,6 @@ class Map extends Component {
       });
       return { scale, opacity };
     });
-
     return (
       <View style={styles.container}>
         <MapView
@@ -164,7 +220,7 @@ class Map extends Component {
           style={styles.container}
           onPress={event => this.createMarker(event)}
         >
-          {this.state.markers.map((marker, index) => {
+          {this.state.markers.map((marker, index) => { // {this.state.selectedMarker.map((game, index) => {
             const scaleStyle = {
               transform: [
                 {
@@ -177,8 +233,8 @@ class Map extends Component {
             };
             return (
               <MapView.Marker key={index}
-                coordinate={marker.coordinate}
-                onPress={() => this.markerClick()}
+                coordinate={this.state.markers.coordinate}
+                onPress={() => this.markerClick(this.state.markers[index])}
               >
                 <Animated.View style={[styles.markerWrap, opacityStyle]}>
                   <Animated.View style={[styles.ring, scaleStyle]} />
@@ -208,17 +264,28 @@ class Map extends Component {
           style={styles.scrollView}
           contentContainerStyle={styles.endPadding}
         >
-          {this.state.markers.map((marker, index) => (
+          {this.state.selectedMarker.game_list.map((game, index) => (
             <View style={styles.card} key={index}>
               <Image
-                source={marker.image}
+                source={Images[index]} // source={marker.image}
                 style={styles.cardImage}
                 resizeMode="cover"
               />
               <View style={styles.textContent}>
-                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text numberOfLines={1} style={styles.cardtitle}>{`${game.date} ${game.time}`}</Text>
+                </View>
                 <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.description}
+                  {`duration: ${game.duration} min`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`players needed: ${game.players_needed}`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`max # players: ${game.max_players}`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`level: ${game.level}`}
                 </Text>
               </View>
             </View>
@@ -302,5 +369,4 @@ const mapStateToProps = state => (
 );
 
 export default connect(mapStateToProps, { fetchCourts })(Map);
-
 // AppRegistry.registerComponent('mapfocus', () => screens);
