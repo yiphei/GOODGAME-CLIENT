@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text, StyleSheet, ImageBackground, View, Button, ScrollView } from 'react-native';
-import { fetchGame, joinGame, deleteGame } from '../actions/index';
+import { fetchGame, joinGame, deleteGame, UserAddGame, fetchUser } from '../actions/index';
 
 const background = require('../img/court.png');
 
 class GameView extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
-    console.log('post componentdidmount', this.props.navigation.state.params.game._id);
+    console.log('In Gameview componentdidmount');
+    this.props.fetchUser();
     this.props.fetchGame(this.props.navigation.state.params.game._id);
   }
 
   onJoinClick = () => {
     this.props.joinGame(this.props.navigation.state.params.game._id, this.props.navigation.state.params.game);
-    // this.props.userJoinGame()
-    // this.props.navigation.navigate('Home');
+    this.props.UserAddGame(this.props.navigation.state.params.game);
+    this.props.fetchUser();
+    this.props.fetchGame(this.props.navigation.state.params.game._id);
+    console.log('BEFORE A');
+    console.log(this.props.user);
+    console.log('AFTER A');
   }
 
   onDeleteClick = () => {
@@ -28,17 +33,8 @@ class GameView extends Component {
 
 
   renderPlayers = () => {
-    console.log('here');
-    console.log(this.props.game.players_list);
-    console.log('befopre');
-
     if (this.props.game.players_list) {
-      console.log(this.props.game.author);
-      console.log('TTTTTT');
-
-
       return this.props.game.players_list.map((player) => {
-        console.log(player);
         return (
           <View>
             <Text style={styles.gameText}> {player.handle} </Text>
@@ -47,6 +43,64 @@ class GameView extends Component {
       });
     } else {
       console.log('loading...');
+    }
+  }
+
+  onLeaveClick = () => {
+
+  }
+
+
+  renderUsers = () => {
+    if (this.props.game.author) {
+      return (
+        <View>
+          <Text style={styles.gameText}> Author: {this.props.game.author.handle} </Text>
+          <Text style={styles.gameText}> Players: </Text>
+          {this.renderPlayers()}
+        </View>
+      );
+    }
+  }
+
+  renderButton = () => {
+    if (Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object) {
+      console.log('USER IS STILL NULL');
+    } else {
+      console.log('INSIDE RENDERBUTTON');
+      console.log(this.props.user);
+
+      if (Array.isArray(this.props.user.games) && this.props.user.games.length) {
+        console.log('PASSED');
+        console.log(this.props.user);
+
+        if (this.props.user.games.indexOf(this.props.navigation.state.params.game._id) >= 0) {
+          return (
+            <View>
+              <Button title="Leave Game" onPress={() => this.onLeaveClick()} />
+            </View>
+          );
+        } else {
+          return (
+            <View>
+              <Button title="Join Game" onPress={() => this.onJoinClick()} />
+            </View>
+          );
+        }
+        return (
+          <View>
+            <Button title="Join Game" onPress={() => this.onJoinClick()} />
+          </View>
+        );
+      } else {
+        console.log('NOT PASSED');
+        console.log(this.props.user);
+        return (
+          <View>
+            <Button title="Join Game" onPress={() => this.onJoinClick()} />
+          </View>
+        );
+      }
     }
   }
 
@@ -65,9 +119,8 @@ class GameView extends Component {
             <Text style={styles.gameText}> Players:{this.props.game.players} </Text>
             <Text style={styles.gameText}> Max Players: {this.props.game.max_players} </Text>
             <Text style={styles.gameText}> Skill Level: {this.props.game.level} </Text>
-            <Text style={styles.gameText}> Players: {this.props.game.players_list}</Text>
-            {this.renderPlayers()}
-            <Button title="Join Game" onPress={() => this.onJoinClick()} />
+            {this.renderUsers()}
+            {this.renderButton()}
             <Button title="Delete Game" onPress={() => this.onDeleteClick()} />
           </View>
         </ScrollView>
@@ -106,7 +159,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => (
   {
     game: state.games.game,
+    user: state.user.user,
   }
 );
 
-export default connect(mapStateToProps, { fetchGame, joinGame, deleteGame })(GameView);
+export default connect(mapStateToProps, {
+  fetchGame, joinGame, deleteGame, UserAddGame, fetchUser,
+})(GameView);
