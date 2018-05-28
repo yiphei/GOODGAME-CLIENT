@@ -56,7 +56,6 @@ class Evaluation extends Component {
   onSend(messages = []) {
     const step = this.state.step - 1;
     console.log('step', step);
-
     if ((messages[0].text === 'Like') || (messages[0].text === 'Dislike')) {
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, [{ ...messages[0], sent: true, received: true }]),
