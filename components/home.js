@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, ImageBackground, View, Button, Animated, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchGames } from '../actions';
+import { fetchGames, fetchCourts } from '../actions';
 
 const background = require('../img/court.png');
 
 class Home extends Component {
   componentDidMount() {
     this.props.fetchGames();
+    this.props.fetchCourts();
   }
 
   showGameDetail = (game) => {
@@ -108,7 +109,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => (
   {
     games: state.games,
+    courts: state.courts,
   }
 );
 
-export default connect(mapStateToProps, { fetchGames })(Home);
+export default connect(mapStateToProps, { fetchGames, fetchCourts })(Home);

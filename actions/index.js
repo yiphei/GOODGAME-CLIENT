@@ -5,6 +5,7 @@ const ROOT_URL = 'https://good-game.herokuapp.com/api';
 
 export const ActionTypes = {
   FETCH_COURTS: 'FETCH_COURTS',
+  CREATE_COURT: 'CREATE_COURT',
   FETCH_POSTS: 'FETCH_POSTS',
   FETCH_POST: 'FETCH_POST',
   UPDATE_POST: 'UPDATE_POST',
@@ -17,6 +18,26 @@ export const ActionTypes = {
   FETCH_USER: 'FETCH_USER',
   FETCH_USERS: 'FETCH_USERS',
 };
+
+export function createCourt(court) {
+  return (dispatch) => {
+    const fields = {
+      title: court.date,
+      lat: court.lat,
+      long: court.long,
+      game_list: [],
+    };
+    // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
+    axios.post(`${ROOT_URL}/courts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      console.log('in createCourt');
+      dispatch({ type: 'CREATE_COURT', payload: null });
+      console.log(response.data);
+      // dispatch({ type: 'CREATE_POST', payload: response.data });
+    }).catch((error) => {
+      console.log(error.response);
+    });
+  };
+}
 
 export function fetchCourts() {
   // Action Creator returns a function
