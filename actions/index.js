@@ -61,7 +61,8 @@ export function updateGame(game) {
     console.log(game);
     // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
     axios.put(`${ROOT_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      console.log('in updatePost', response.data);
+      // console.log('in updatePost', response.data);
+      console.log('in updatePost');
       fetchGames();
       dispatch({ type: 'UPDATE_POST', payload: game });
     }).catch((error) => {
@@ -88,13 +89,32 @@ export function joinGame(id, game) {
   };
 }
 
+
+export function UserAddGame(game) {
+  console.log('Inside UserAddGame game');
+  console.log(game);
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/user`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    // do something with response.data  (some json)
+      console.log(response);
+      dispatch({
+        type: ActionTypes.FETCH_USER,
+        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
+      });
+    }).catch((error) => {
+    // hit an error do something else!
+      console.log('error');
+    });
+  };
+}
+
 // axios GET
 export function fetchGame(id) {
   return (dispatch) => {
     // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
     console.log('fetchpost ', id);
     axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
-      console.log('in fetchGame', response.data);
+      console.log('in fetchGame');
       dispatch({ type: 'FETCH_POST', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchPosts');
@@ -208,7 +228,7 @@ export function fetchUser() {
     // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
     console.log('in REACT fetchuser ');
     axios.get(`${ROOT_URL}/user`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      console.log('in fetchuser', response.data);
+      console.log('in fetchuser SUCCESS', response.data);
       dispatch({ type: 'FETCH_USER', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchUser');
