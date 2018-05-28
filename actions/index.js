@@ -42,7 +42,6 @@ export function fetchGames() {
     // axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
     axios.get(`${ROOT_URL}/posts`).then((response) => {
       // response.data is a json file
-      console.log('in fetchGames', response.data);
       dispatch({ type: 'FETCH_POSTS', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchPosts');
@@ -215,6 +214,7 @@ export function fetchUser() {
       console.log('error occured during fetchUser');
     });
   };
+}
 
 
 // export function fetchUsers() {
