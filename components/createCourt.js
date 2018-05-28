@@ -10,28 +10,20 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
-import { fetchCourts } from '../actions';
-
-const Images = [
-  { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
-  { uri: 'https://media.giphy.com/media/vrd9ryhalxTws/giphy.gif' },
-  { uri: 'https://media.giphy.com/media/RsnFpEDtHjO48/giphy.gif' },
-  { uri: 'https://media.giphy.com/media/sngOr8Y7O7uz6/giphy.gif' },
-  { uri: 'https://media.giphy.com/media/KvTuvZjYiERHy/giphy.gif' },
-];
+import { createCourt } from '../actions';
 
 const { width, height } = Dimensions.get('window');
-
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
-// change to markers: this.props.courts
-class Map extends Component {
+
+class CreateCourt extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: this.props.courts,
+      markers: [],
       region: {
         latitude: 43.7022928,
         longitude: -72.2895353,
@@ -39,17 +31,14 @@ class Map extends Component {
         longitudeDelta: 0.040142817690068,
       },
     };
-    this.markerClick = this.markerClick.bind(this);
     this.createMarker = this.createMarker.bind(this);
   }
 
   componentWillMount() {
-    this.props.fetchCourts();
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
   componentDidMount() {
-    // this.props.fetchCourts();
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
@@ -65,16 +54,7 @@ class Map extends Component {
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
-          const { coordinate } = {
-            coordinate: {
-              latitude: this.state.markers[index].latitude,
-              longitude: this.state.markers[index].longitude,
-            },
-            title: 'New Court',
-            description: 'Play pick up games at Dartmouth!',
-            image: Images[0],
-          };
-          console.log('court pin rendered');
+          const { coordinate } = this.state.markers[index];
           this.map.animateToRegion(
             {
               ...coordinate,
@@ -88,38 +68,20 @@ class Map extends Component {
     });
   }
 
-  markerClick() {
-    this.props.navigation.navigate('Home');
-  }
-
   createMarker(e) {
     // write point to database
-    console.log(this.props.courts.all);
     console.log(e.nativeEvent.coordinate);
+    const fields = {
+      title: 'New Court',
+      lat: e.nativeEvent.coordinate.latitude,
+      long: e.nativeEvent.coordinate.longitude,
+      game_list: [],
+    };
+    this.props.createCourt(fields);
     this.props.navigation.navigate('Home');
-    console.log(this.props.courts.all);
   }
 
   render() {
-    const interpolations = this.state.markers.map((marker, index) => {
-      const inputRange = [
-        (index - 1) * CARD_WIDTH,
-        index * CARD_WIDTH,
-        ((index + 1) * CARD_WIDTH),
-      ];
-      const scale = this.animation.interpolate({
-        inputRange,
-        outputRange: [1, 2.5, 1],
-        extrapolate: 'clamp',
-      });
-      const opacity = this.animation.interpolate({
-        inputRange,
-        outputRange: [0.35, 1, 0.35],
-        extrapolate: 'clamp',
-      });
-      return { scale, opacity };
-    });
-
     return (
       <View style={styles.container}>
         <MapView
@@ -127,31 +89,7 @@ class Map extends Component {
           initialRegion={this.state.region}
           style={styles.container}
           onPress={event => this.createMarker(event)}
-        >
-          {this.state.markers.map((marker, index) => {
-            const scaleStyle = {
-              transform: [
-                {
-                  scale: interpolations[index].scale,
-                },
-              ],
-            };
-            const opacityStyle = {
-              opacity: interpolations[index].opacity,
-            };
-            return (
-              <MapView.Marker key={index}
-                coordinate={{ latitude: marker.lat, longitude: marker.long }}
-                onPress={() => this.markerClick()}
-              >
-                <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                  <Animated.View style={[styles.ring, scaleStyle]} />
-                  <View style={styles.marker} />
-                </Animated.View>
-              </MapView.Marker>
-            );
-          })}
-        </MapView>
+        />
         <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
@@ -259,12 +197,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => (
-  {
-    courts: state.courts.all,
-  }
-);
-
-export default connect(mapStateToProps, { fetchCourts })(Map);
-
-// AppRegistry.registerComponent('mapfocus', () => screens);
+export default connect(null, { createCourt })(CreateCourt);
+// AppRegistry.registerComponent('mapfocus', () => CreateCourt);
