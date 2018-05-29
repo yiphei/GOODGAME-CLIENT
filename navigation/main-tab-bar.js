@@ -9,11 +9,13 @@ import Ranking from '../components/ranking';
 import Map from '../components/map';
 import Evaluation from '../components/chatbot';
 import CreateCourt from '../components/createCourt';
+import YourGames from '../components/your-game';
 
 const MainTabBar = createBottomTabNavigator(
   {
     Home,
     CreateGame,
+    YourGames,
     CreateCourt,
     Profile,
     Map,

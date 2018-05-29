@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { signinUser } from '../actions/index';
+import { signinUser, fetchUser } from '../actions/index';
 
 const background = require('../img/login.png');
 
@@ -17,6 +17,7 @@ class Login extends Component {
   signIn() {
     console.log(this.state);
     this.props.signinUser(this.state); // not sure that you can passin this.state directly
+    this.props.fetchUser();
     this.props.navigation.navigate('Home');
   }
 
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { signinUser })(Login);
+export default connect(null, { signinUser, fetchUser })(Login);
 
 // <Button title="Login"
 //   style={styles.button}

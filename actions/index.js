@@ -6,6 +6,8 @@ const ROOT_URL = 'https://good-game.herokuapp.com/api';
 export const ActionTypes = {
   FETCH_COURTS: 'FETCH_COURTS',
   CREATE_COURT: 'CREATE_COURT',
+  UPDATE_COURT: 'UPDATE_COURT',
+  FETCH_BY_ID: 'FETCH_BY_ID',
   FETCH_POSTS: 'FETCH_POSTS',
   FETCH_POST: 'FETCH_POST',
   UPDATE_POST: 'UPDATE_POST',
@@ -48,6 +50,38 @@ export function fetchCourts() {
       // response.data is a json file
       console.log('in fetchCourts', response.data);
       dispatch({ type: 'FETCH_COURTS', payload: response.data });
+    }).catch((error) => {
+      console.log('error occured during fetchPosts');
+    });
+    // on the completion we will dispatch an action
+    // can now dispatch stuff
+  };
+}
+
+export function updateCourt(court) {
+  return (dispatch) => {
+    const id = court._id;
+    const fields = {
+      id: court._id, title: court.title, coordinate: court.coordinate, game_list: court.game_list,
+    };
+    console.log(court);
+    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
+    axios.put(`${ROOT_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      // console.log('in updatePost', response.data);
+      console.log('in updateCourt');
+      dispatch({ type: 'UPDATE_COURT', payload: court });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
+export function findGames(idArray) {
+  return (dispatch) => {
+    // axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+    axios.find(`${ROOT_URL}/posts`, '_id': { $in: idArray }).then((response) => {
+      // response.data is a json file
+      dispatch({ type: 'FETCH_BY_ID', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchPosts');
     });
@@ -149,8 +183,7 @@ export function createGame(post) {
       date: post.date,
       time: post.time,
       duration: post.duration,
-      lat: post.lat,
-      long: post.long,
+      location: post.location,
       players_needed: post.players_needed,
       max_players: post.max_players,
       level: post.level,
@@ -252,7 +285,7 @@ export function fetchUser() {
       console.log('in fetchuser SUCCESS', response.data);
       dispatch({ type: 'FETCH_USER', payload: response.data });
     }).catch((error) => {
-      console.log('error occured during fetchUser');
+      console.log(error);
     });
   };
 }

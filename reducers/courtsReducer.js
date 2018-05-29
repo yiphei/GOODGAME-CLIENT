@@ -13,6 +13,9 @@ const CourtsReducer = (state = initialState, action) => {
     case ActionTypes.FETCH_COURTS: {
       return { ...state, all: action.payload }; // return state w/ all property set to new posts
     }
+    case ActionTypes.UPDATE_COURT: {
+      return { ...state, court: action.payload }; // return state w/ all property set to new posts
+    }
     // case ActionTypes.CREATE_POST: {
     //   return { ...state };
     // }

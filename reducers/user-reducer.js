@@ -8,6 +8,7 @@ const initialState = {
 const UserReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.FETCH_USER: {
+      console.log(action.payload);
       return { ...state, user: action.payload }; // return state w/ all property set to new posts
     }
     case ActionTypes.FETCH_USERS: {

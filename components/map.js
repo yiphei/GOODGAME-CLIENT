@@ -88,7 +88,7 @@ class Map extends Component {
     });
   }
 
-  markerClick() {
+  markerClick(e) {
     this.props.navigation.navigate('Home');
   }
 
