@@ -34,94 +34,10 @@ class Map extends Component {
     console.log('constructor');
     super(props);
     this.state = {
-<<<<<<< HEAD
-      selectedMarker: {
-        // lat: 43.702828,
-        // long: -72.284016,
-
-        coordinate: {
-          latitude: 43.702828,
-          longitude: -72.284016,
-        },
-        title: 'Alumni Gym',
-        // description: 'This is the best place in Hanover. Alumni Gym!',
-        // image: Images[0],
-        game_list: [
-          {
-            _id: '5b0b4b74b74f9900392a2842',
-            date: '05/18/18',
-            time: 'ZZZZ',
-            duration: 4,
-            players_needed: 4,
-            max_players: 4,
-            level: 4,
-          },
-        ],
-      },
-      markers: [ // courts
-        {
-          // lat: 43.702828,
-          // long: -72.284016,
-
-          coordinate: {
-            latitude: 43.702828,
-            longitude: -72.284016,
-          },
-          title: 'Alumni Gym',
-          // description: 'This is the best place in Hanover. Alumni Gym!',
-          // image: Images[0],
-          game_list: [
-            {
-              _id: '5b0b4b74b74f9900392a2842',
-              date: '05/18/18',
-              time: 'ZZZZ',
-              duration: 4,
-              players_needed: 4,
-              max_players: 4,
-              level: 4,
-            },
-          ],
-        },
-        // {
-        //   coordinate: {
-        //     latitude: 43.703001,
-        //     longitude: -72.284544,
-        //   },
-        //   title: 'Second Best Place',
-        //   description: 'This is the second best place in Hanover. Outside Alumni Gym!',
-        //   image: Images[1],
-        // },
-        // {
-        //   coordinate: {
-        //     latitude: 43.708547,
-        //     longitude: -72.284610,
-        //   },
-        //   title: 'Third Best Place',
-        //   description: 'This is the third best place in Hanover',
-        //   image: Images[2],
-        // },
-        // {
-        //   coordinate: {
-        //     latitude: 43.707349,
-        //     longitude: -72.286280,
-        //   },
-        //   title: 'Fourth Best Place',
-        //   description: 'This is the fourth best place in Hanover',
-        //   image: Images[3],
-        // },
-        // {
-        //   coordinate: {
-        //     latitude: 43.701922,
-        //     longitude: -72.292740,
-        //   },
-        //   title: 'Fifth Best Place',
-        //   description: 'This is the fifth best place in Hanover',
-        //   image: Images[4],
-        // },
-      ],
-=======
       markers: this.props.courts,
->>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
+=======
+      marker: this.props.courts,
+>>>>>>> edd5957d1e890c43aa34ed328b2eac69e4a6156f
       region: {
         latitude: 43.7022928,
         longitude: -72.2895353,
@@ -134,44 +50,45 @@ class Map extends Component {
   }
 
   componentWillMount() {
-<<<<<<< HEAD
     console.log('componentwillmount');
-=======
-    this.props.fetchCourts();
->>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
+
   componentDidMount() {
-<<<<<<< HEAD
     console.log('componentdidmount');
     this.props.fetchCourts();
+    console.log(this.props.courts);
     // this.setState({ markers: this.props.courts.all });
 
-=======
-    // this.props.fetchCourts();
->>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
+    console.log('kjfksdjhfkaisufhawiusBFuaesfbuaesFGwufeksjhfciuwekshfiuKHCiueshfiueawshfiuweshfwiueshfwiuemimijmjmjimi');
     this.animation.addListener(({ value }) => {
-      // let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      let index = this.state.markers.length;
-      if (index >= this.state.markers.length) {
-        index = this.state.markers.length - 1;
+      console.log('kjfksdjhfksjdfhjksd,o,ko,imimimijmjmjimi');
+      let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+      console.log(index);
+      if (index >= this.props.courts.length) {
+        console.log(':((((()))))');
+        index = this.props.courts.length - 1;
       }
       if (index <= 0) {
+        console.log(':((((()))))');
         index = 0;
       }
 
       // draw markers
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
+        console.log('Hi');
         if (this.index !== index) {
+          console.log('Jesus*****');
           this.index = index;
+          console.log(this.props.courts[index]);
           const { coordinate } = {
             coordinate: {
-              latitude: this.state.markers[index].latitude,
-              longitude: this.state.markers[index].longitude,
+              latitude: this.props.courts[index].latitude,
+              longitude: this.props.courts[index].longitude,
             },
             title: 'New Court',
             description: 'Play pick up games at Dartmouth!',
@@ -199,17 +116,49 @@ class Map extends Component {
 
   createMarker(e) {
     // write point to database
-    console.log(this.props.courts.all);
+    console.log(this.props.courts);
     console.log(e.nativeEvent.coordinate);
     this.props.navigation.navigate('Home');
-    console.log(this.props.courts.all);
+    console.log(this.props.courts);
+  }
+  cardDraw() {
+    return (
+      this.props.courts.map((marker, index) => {
+        return (
+          marker.game_list.map((game, i) => (
+            <View style={styles.card} key={i}>
+              <Image
+                source={Images[1]} // source={marker.image}
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+              <View style={styles.textContent}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text numberOfLines={1} style={styles.cardtitle}>{`${game.date} ${game.time}`}</Text>
+                </View>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`duration: ${game.duration} min`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`players needed: ${game.players_needed}`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`max # players: ${game.max_players}`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`level: ${game.level}`}
+                </Text>
+              </View>
+            </View>
+          ))
+        );
+      }));
   }
 
-  render() {
-    console.log('render');
 
-    // for each card?
-    const interpolations = this.state.markers.map((marker, index) => {
+  render() {
+    console.log(this.cardDraw());
+    const interpolations = this.props.courts.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
         index * CARD_WIDTH,
@@ -235,7 +184,7 @@ class Map extends Component {
           style={styles.container}
           onPress={event => this.createMarker(event)}
         >
-          {this.state.markers.map((marker, index) => { // {this.state.selectedMarker.map((game, index) => {
+          {this.props.courts.map((marker, index) => {
             const scaleStyle = {
               transform: [
                 {
@@ -248,13 +197,8 @@ class Map extends Component {
             };
             return (
               <MapView.Marker key={index}
-<<<<<<< HEAD
-                coordinate={this.state.markers.coordinate}
-                onPress={() => this.markerClick(this.state.markers[index])}
-=======
                 coordinate={{ latitude: marker.lat, longitude: marker.long }}
                 onPress={() => this.markerClick()}
->>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
               >
                 <Animated.View style={[styles.markerWrap, opacityStyle]}>
                   <Animated.View style={[styles.ring, scaleStyle]} />
@@ -284,32 +228,7 @@ class Map extends Component {
           style={styles.scrollView}
           contentContainerStyle={styles.endPadding}
         >
-          {this.state.selectedMarker.game_list.map((game, index) => (
-            <View style={styles.card} key={index}>
-              <Image
-                source={Images[index]} // source={marker.image}
-                style={styles.cardImage}
-                resizeMode="cover"
-              />
-              <View style={styles.textContent}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text numberOfLines={1} style={styles.cardtitle}>{`${game.date} ${game.time}`}</Text>
-                </View>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {`duration: ${game.duration} min`}
-                </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {`players needed: ${game.players_needed}`}
-                </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {`max # players: ${game.max_players}`}
-                </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {`level: ${game.level}`}
-                </Text>
-              </View>
-            </View>
-          ))}
+          {this.cardDraw()}
         </Animated.ScrollView>
       </View>
     );
