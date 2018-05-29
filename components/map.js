@@ -28,12 +28,13 @@ const { width, height } = Dimensions.get('window');
 
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 50;
-
+// change to markers: this.props.courts
 class Map extends Component {
   constructor(props) {
     console.log('constructor');
     super(props);
     this.state = {
+<<<<<<< HEAD
       selectedMarker: {
         // lat: 43.702828,
         // long: -72.284016,
@@ -118,6 +119,9 @@ class Map extends Component {
         //   image: Images[4],
         // },
       ],
+=======
+      markers: this.props.courts,
+>>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
       region: {
         latitude: 43.7022928,
         longitude: -72.2895353,
@@ -130,15 +134,23 @@ class Map extends Component {
   }
 
   componentWillMount() {
+<<<<<<< HEAD
     console.log('componentwillmount');
+=======
+    this.props.fetchCourts();
+>>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
   componentDidMount() {
+<<<<<<< HEAD
     console.log('componentdidmount');
     this.props.fetchCourts();
     // this.setState({ markers: this.props.courts.all });
 
+=======
+    // this.props.fetchCourts();
+>>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
@@ -156,7 +168,16 @@ class Map extends Component {
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
           this.index = index;
-          const { coordinate } = this.state.markers[index];
+          const { coordinate } = {
+            coordinate: {
+              latitude: this.state.markers[index].latitude,
+              longitude: this.state.markers[index].longitude,
+            },
+            title: 'New Court',
+            description: 'Play pick up games at Dartmouth!',
+            image: Images[0],
+          };
+          console.log('court pin rendered');
           this.map.animateToRegion(
             {
               ...coordinate,
@@ -227,8 +248,13 @@ class Map extends Component {
             };
             return (
               <MapView.Marker key={index}
+<<<<<<< HEAD
                 coordinate={this.state.markers.coordinate}
                 onPress={() => this.markerClick(this.state.markers[index])}
+=======
+                coordinate={{ latitude: marker.lat, longitude: marker.long }}
+                onPress={() => this.markerClick()}
+>>>>>>> 30fca0712ee4c034b35a87126d8b15a920961a88
               >
                 <Animated.View style={[styles.markerWrap, opacityStyle]}>
                   <Animated.View style={[styles.ring, scaleStyle]} />
@@ -358,7 +384,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
   {
-    courts: state.courts,
+    courts: state.courts.all,
   }
 );
 

@@ -518,6 +518,10 @@
     lodash "^4.17.4"
     react-native-vector-icons "4.5.0"
 
+"@remobile/react-native-card-list@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@remobile/react-native-card-list/-/react-native-card-list-1.0.2.tgz#4a5e36c23567774f028b998e6f65cbe9477160fb"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
