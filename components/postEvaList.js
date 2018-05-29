@@ -1,4 +1,7 @@
+/* eslint padded-blocks: ["error", "never"] */
+
 import React, { Component } from 'react';
+
 import {
 
   StyleSheet,
@@ -6,18 +9,13 @@ import {
   View,
 } from 'react-native';
 
-import { connect } from 'react-redux';
-import { CardList } from './CardList';
-import { ItemCard } from './ItemCard';
-
-import { fetchUser } from '../actions/index';
+// import { connect } from 'react-redux';
+import CardList from './CardList';
+import ItemCard from './ItemCard';
+import Evaluation from '../components/chatbot';
+// import { fetchUser } from '../actions/index';
 // import { CardList } from 'react-native-card-list';
 
-
-module.exports = {
-  CardList,
-  ItemCard,
-};
 
 /* eslint padded-blocks: ["error", "never"] */
 const styles = StyleSheet.create({
@@ -30,34 +28,46 @@ const styles = StyleSheet.create({
 });
 
 const cards = [
+
   {
     id: '0',
-    title: 'Starry Night',
-    /* eslint global-require: "error" */
-    picture: require('../img/court.png'),
-    content: <Text>Starry Night</Text>,
+    title: 'Game at 5:00pm, 5/29/2018',
+    picture: require('../assets/court_1.jpg'), // eslint-disable-line global-require
+    content: <Evaluation />,
   },
   {
     id: '1',
-    title: 'Wheat Field',
+    title: 'Game at 3:00pm, 5/29/2018',
     /* eslint global-require: "error" */
-    picture: require('../img/court.png'),
+    picture: require('../assets/court_2.jpg'), // eslint-disable-line global-require
     content: <Text>Wheat Field with Cypresses</Text>,
   },
   {
     id: '2',
-    title: 'Bedroom in Arles',
+    title: 'Game at 6:00pm, 5/30/2018',
     /* eslint global-require: "error" */
-    picture: require('../img/court.png'),
+    picture: require('../assets/court_3.jpg'), // eslint-disable-line global-require
+    content: <Text>Bedroom in Arles</Text>,
+  },
+  {
+    id: '3',
+    title: 'Game at 6:00pm, 5/30/2018',
+    /* eslint global-require: "error" */
+    picture: require('../assets/court_4.jpg'), // eslint-disable-line global-require
     content: <Text>Bedroom in Arles</Text>,
   },
 ];
 
-class postEvaList extends Component {
+class PostEvaList extends Component {
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     return (
       <View style={styles.container}>
-        <CardList cards={cards} />
+        <View>
+          <CardList cards={cards} />
+        </View>
       </View>
     );
   }
@@ -65,10 +75,11 @@ class postEvaList extends Component {
 
 // export default postEvaList;
 
-const mapStateToProps = state => (
-  {
-    user: state.user,
-  }
-);
+// const mapStateToProps = state => (
+//   {
+//     user: state.user,
+//   }
+// );
 
-export default connect(mapStateToProps, { fetchUser })(postEvaList);
+export default PostEvaList;
+// export default connect(mapStateToProps, { fetchUser })(postEvaList);
