@@ -31,7 +31,7 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: this.props.courts,
+      marker: this.props.courts,
       region: {
         latitude: 43.7022928,
         longitude: -72.2895353,
@@ -45,6 +45,7 @@ class Map extends Component {
 
   componentWillMount() {
     this.props.fetchCourts();
+    console.log(this.props.courts);
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
@@ -52,23 +53,31 @@ class Map extends Component {
     // this.props.fetchCourts();
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
+    console.log('kjfksdjhfkaisufhawiusBFuaesfbuaesFGwufeksjhfciuwekshfiuKHCiueshfiueawshfiuweshfwiueshfwiuemimijmjmjimi');
     this.animation.addListener(({ value }) => {
+      console.log('kjfksdjhfksjdfhjksd,o,ko,imimimijmjmjimi');
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= this.state.markers.length) {
-        index = this.state.markers.length - 1;
+      console.log(index);
+      if (index >= this.props.courts.length) {
+        console.log(':((((()))))');
+        index = this.props.courts.length - 1;
       }
       if (index <= 0) {
+        console.log(':((((()))))');
         index = 0;
       }
 
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
+        console.log('Hi');
         if (this.index !== index) {
+          console.log('Jesus*****');
           this.index = index;
+          console.log(this.props.courts[index]);
           const { coordinate } = {
             coordinate: {
-              latitude: this.state.markers[index].latitude,
-              longitude: this.state.markers[index].longitude,
+              latitude: this.props.courts[index].latitude,
+              longitude: this.props.courts[index].longitude,
             },
             title: 'New Court',
             description: 'Play pick up games at Dartmouth!',
@@ -94,14 +103,49 @@ class Map extends Component {
 
   createMarker(e) {
     // write point to database
-    console.log(this.props.courts.all);
+    console.log(this.props.courts);
     console.log(e.nativeEvent.coordinate);
     this.props.navigation.navigate('Home');
-    console.log(this.props.courts.all);
+    console.log(this.props.courts);
+  }
+  cardDraw() {
+    return (
+      this.props.courts.map((marker, index) => {
+        return (
+          marker.game_list.map((game, i) => (
+            <View style={styles.card} key={i}>
+              <Image
+                source={Images[1]} // source={marker.image}
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+              <View style={styles.textContent}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text numberOfLines={1} style={styles.cardtitle}>{`${game.date} ${game.time}`}</Text>
+                </View>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`duration: ${game.duration} min`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`players needed: ${game.players_needed}`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`max # players: ${game.max_players}`}
+                </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {`level: ${game.level}`}
+                </Text>
+              </View>
+            </View>
+          ))
+        );
+      }));
   }
 
+
   render() {
-    const interpolations = this.state.markers.map((marker, index) => {
+    console.log(this.cardDraw());
+    const interpolations = this.props.courts.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
         index * CARD_WIDTH,
@@ -128,7 +172,7 @@ class Map extends Component {
           style={styles.container}
           onPress={event => this.createMarker(event)}
         >
-          {this.state.markers.map((marker, index) => {
+          {this.props.courts.map((marker, index) => {
             const scaleStyle = {
               transform: [
                 {
@@ -172,21 +216,7 @@ class Map extends Component {
           style={styles.scrollView}
           contentContainerStyle={styles.endPadding}
         >
-          {this.state.markers.map((marker, index) => (
-            <View style={styles.card} key={index}>
-              <Image
-                source={marker.image}
-                style={styles.cardImage}
-                resizeMode="cover"
-              />
-              <View style={styles.textContent}>
-                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.description}
-                </Text>
-              </View>
-            </View>
-          ))}
+          {this.cardDraw()}
         </Animated.ScrollView>
       </View>
     );
