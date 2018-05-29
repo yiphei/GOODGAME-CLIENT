@@ -142,21 +142,16 @@ class Map extends Component {
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
     this.animation.addListener(({ value }) => {
-      let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+      // let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+      let index = this.state.markers.length;
       if (index >= this.state.markers.length) {
         index = this.state.markers.length - 1;
       }
-
-      // // This for cards, right?
-      // if (index >= this.state.selectedMarker.game_list.length) {
-      //   index = this.state.selectedMarker.game_list.length - 1;
-      // }
-
       if (index <= 0) {
         index = 0;
       }
 
-      // for markers?
+      // draw markers
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
         if (this.index !== index) {
@@ -194,7 +189,6 @@ class Map extends Component {
 
     // for each card?
     const interpolations = this.state.markers.map((marker, index) => {
-    // const interpolations = this.state.selectedMarker.game_list.map((game, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
         index * CARD_WIDTH,

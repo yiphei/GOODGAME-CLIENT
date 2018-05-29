@@ -18,7 +18,7 @@ const MainTabBar = createBottomTabNavigator(
     Evaluation,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Map',
   },
 );
 
