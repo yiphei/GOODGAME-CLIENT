@@ -9,6 +9,7 @@ import Ranking from '../components/ranking';
 import Map from '../components/map';
 import Evaluation from '../components/chatbot';
 import CreateCourt from '../components/createCourt';
+// import postEvaList from '../components';
 
 const MainTabBar = createBottomTabNavigator(
   {
@@ -18,6 +19,7 @@ const MainTabBar = createBottomTabNavigator(
     Profile,
     Map,
     Evaluation,
+    // postEvaList,
   },
   {
     initialRouteName: 'Home',
