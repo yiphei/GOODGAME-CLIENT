@@ -44,7 +44,6 @@ class Map extends Component {
       },
     };
     this.markerClick = this.markerClick.bind(this);
-    this.createMarker = this.createMarker.bind(this);
   }
 
   componentWillMount() {
@@ -56,6 +55,7 @@ class Map extends Component {
   componentDidMount() {
     console.log('componentdidmount');
     this.props.fetchCourts();
+    this.props.fetchGames();
 
 
     // this.props.fetchCourt(this.props.courts[0]);
@@ -93,16 +93,6 @@ class Map extends Component {
     });
   }
 
-  // getGames = () => {
-  //   if (this.props.courts) {
-  //     return this.props.courts.map((court) => {
-  //       return this.props.fetchCourt(court);
-  //     });
-  //   } else {
-  //     console.log('loading...');
-  //   }
-  // }
-
   markerClick(marker) {
     console.log('markerClick');
     // this.props.navigation.navigate('Home');
@@ -113,49 +103,10 @@ class Map extends Component {
     console.log('this.props.courts[marker]._id ', this.props.courts[marker]._id);
   }
 
-  createMarker(e) {
-    // write point to database
-    // console.log(this.props.courts);
-    // console.log(e.nativeEvent.coordinate);
-    // this.props.navigation.navigate('Home');
-    // console.log(this.props.courts);
+  showGameDetail = (game) => {
+    console.log('Clicked it');
+    this.props.navigation.navigate('GameView', { game });
   }
-  // cardDraw() {
-  //   console.log('drawcard');
-  //   console.log(this.props.courts);
-  //   return (
-  //     this.props.courts.map((marker, index) => {
-  //       return (
-  //         marker.game_list.map((game, i) => (
-  //           <View style={styles.card} key={i}>
-  //             <Image
-  //               source={Images[1]} // source={marker.image}
-  //               style={styles.cardImage}
-  //               resizeMode="cover"
-  //             />
-  //             <View style={styles.textContent}>
-  //               <View style={{ flexDirection: 'row' }}>
-  //                 <Text numberOfLines={1} style={styles.cardtitle}>{`${game.date} ${game.time}`}</Text>
-  //               </View>
-  //               <Text numberOfLines={1} style={styles.cardDescription}>
-  //                 {`duration: ${game.duration} min`}
-  //               </Text>
-  //               <Text numberOfLines={1} style={styles.cardDescription}>
-  //                 {`players needed: ${game.players_needed}`}
-  //               </Text>
-  //               <Text numberOfLines={1} style={styles.cardDescription}>
-  //                 {`max # players: ${game.max_players}`}
-  //               </Text>
-  //               <Text numberOfLines={1} style={styles.cardDescription}>
-  //                 {`level: ${game.level}`}
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         ))
-  //       );
-  //     }));
-  // }
-
 
   render() {
     // console.log('render selectedMarker ', this.state.selectedMarker);
@@ -190,7 +141,6 @@ class Map extends Component {
           ref={map => this.map = map}
           initialRegion={this.state.region}
           style={styles.container}
-          onPress={event => this.createMarker(event)}
         >
           {this.props.courts.map((marker, index) => {
             const scaleStyle = {
@@ -247,21 +197,18 @@ class Map extends Component {
               />
               <View style={styles.textContent}>
                 <View style={{ flexDirection: 'row' }}>
-                  <Text numberOfLines={1} style={styles.cardtitle}>{`${game}`}</Text>
+                  <Text onPress={() => { this.showGameDetail(game); }} numberOfLines={1} style={styles.cardtitle}>{`${game.date} ${game.time}`}</Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text numberOfLines={1} style={styles.cardtitle}>{`${game.date} ${game.time}`}</Text>
-                </View>
-                <Text numberOfLines={1} style={styles.cardDescription}>
+                <Text onPress={() => { this.showGameDetail(game); }} numberOfLines={1} style={styles.cardDescription}>
                   {`duration: ${game.duration} min`}
                 </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
+                <Text onPress={() => { this.showGameDetail(game); }} numberOfLines={1} style={styles.cardDescription}>
                   {`players needed: ${game.players_needed}`}
                 </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
+                <Text onPress={() => { this.showGameDetail(game); }} numberOfLines={1} style={styles.cardDescription}>
                   {`max # players: ${game.max_players}`}
                 </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
+                <Text onPress={() => { this.showGameDetail(game); }} numberOfLines={1} style={styles.cardDescription}>
                   {`level: ${game.level}`}
                 </Text>
               </View>

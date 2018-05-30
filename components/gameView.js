@@ -54,7 +54,7 @@ class GameView extends Component {
       return this.props.game.players_list.map((player) => {
         return (
           <View>
-            <Text style={styles.gameText}> {player.handle} </Text>
+            <Text style={styles.playerText}> {player.handle} </Text>
           </View>
         );
       });
@@ -71,10 +71,14 @@ class GameView extends Component {
   renderUsers = () => {
     if (this.props.game.author) {
       return (
-        <View>
-          <Text style={styles.gameText}> Author: {this.props.game.author.handle} </Text>
-          <Text style={styles.gameText}> Players: </Text>
-          {this.renderPlayers()}
+        <View style={styles.playerContainer}>
+          <Text style={styles.AuthorText}> Author: {this.props.game.author.handle} </Text>
+          <View style={styles.playerDetails}>
+            <Text style={styles.playerHeader}> Players: </Text>
+            <View style={styles.playerList}>
+              {this.renderPlayers()}
+            </View>
+          </View>
         </View>
       );
     }
@@ -149,25 +153,25 @@ class GameView extends Component {
   RenderALL = () => {
     if (this.state.isEditing === false) {
       return (
-        <View>
+        <View style={styles.game}>
           <ScrollView>
-            <View style={styles.game}>
-              <Text style={styles.gameText}> Date: {this.props.game.date} </Text>
-              <Text style={styles.gameText}> Time: {this.props.game.time} </Text>
-              <Text style={styles.gameText}> Duration: {this.props.game.duration} </Text>
-              <Text style={styles.gameText}> Players needed: {this.props.game.players_needed} </Text>
-              <Text style={styles.gameText}> Max Players: {this.props.game.max_players} </Text>
-              <Text style={styles.gameText}> Skill Level: {this.props.game.level} </Text>
-              {this.renderUsers()}
-              {this.renderButton()}
-              {this.renderEditDelete()}
+            <Text style={styles.dateText}> Date: {this.props.game.date} </Text>
+            <Text style={styles.timeText}> Time: {this.props.game.time} </Text>
+            <View style={styles.gameDetails}>
+              <Text style={styles.durationText}> Duration: {this.props.game.duration} </Text>
+              <Text style={styles.playersNeededText}> Players needed: {this.props.game.players_needed} </Text>
+              <Text style={styles.maxPlayersText}> Max Players: {this.props.game.max_players} </Text>
+              <Text style={styles.levelText}> Skill Level: {this.props.game.level} </Text>
             </View>
+            {this.renderUsers()}
+            {this.renderButton()}
+            {this.renderEditDelete()}
           </ScrollView>
         </View>
       );
     } else {
       return (
-        <View>
+        <View style={styles.game}>
           <View style={styles.inputField}>
             <Text style={styles.name}>
               Date
@@ -250,41 +254,135 @@ class GameView extends Component {
 
   render() {
     return (
-      <ImageBackground
-        source={background}
-        style={styles.container}
-      >
+      <View style={styles.container} >
         {this.RenderALL()}
-      </ImageBackground>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     resizeMode: 'cover',
     width: undefined,
     height: undefined,
-    backgroundColor: 'transparent',
-  },
-  topDescription: {
-    height: 60,
-    backgroundColor: '#FF0000BB',
-    fontWeight: 'bold',
-    fontSize: 30,
+    backgroundColor: '#ffffff',
   },
   game: {
-    borderRadius: 30,
-    borderWidth: 10,
-    borderColor: '#000000',
-    backgroundColor: '#99999944',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  gameText: {
+  dateText: {
     fontFamily: 'Helvetica-Bold',
     fontSize: 30,
     color: 'red',
+    marginTop: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+
   },
+
+  timeText: {
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 15,
+    color: 'red',
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+
+  gameDetails: {
+    margin: 30,
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  durationText: {
+    margin: 8,
+    fontSize: 15,
+    alignItems: 'center',
+
+  },
+
+  playersNeededText: {
+    margin: 8,
+    fontSize: 15,
+    alignItems: 'center',
+
+  },
+
+  maxPlayersText: {
+    margin: 8,
+    fontSize: 15,
+    alignItems: 'center',
+
+  },
+
+  levelText: {
+    margin: 8,
+    fontSize: 15,
+    alignItems: 'center',
+  },
+
+  playerContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  playerDetails: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  playerList: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+
+  AuthorText: {
+    margin: 8,
+    fontSize: 15,
+    alignItems: 'center',
+  },
+
+  playerHeader: {
+    margin: 8,
+    fontSize: 15,
+    alignItems: 'center',
+  },
+
+  playerText: {
+    margin: 5,
+    fontSize: 15,
+    alignItems: 'center',
+  },
+
+  inputField: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  name: {
+    margin: 5,
+    fontSize: 15,
+    alignItems: 'center',
+  },
+
 });
 
 const mapStateToProps = state => (

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
-import { signinUser } from '../actions/index';
+import { signinUser, fetchUser, fetchCourts, fetchGames } from '../actions/index';
 
 const background = require('../img/login.png');
 
@@ -24,6 +24,11 @@ class Login extends Component {
     this.signIn = this.signIn.bind(this);
   }
 
+  componentDidMount() {
+    this.props.fetchCourts();
+    this.props.fetchGames();
+  }
+
   signIn() {
     const value = this._form.getValue(); // use that ref to get the form value
     console.log('value: ', value);
@@ -33,7 +38,7 @@ class Login extends Component {
     if (value != null) {
       console.log('value: ', value.email);
       this.props.signinUser({ email: value.email, password: value.password });
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('Map');
     }
   }
 
@@ -99,7 +104,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { signinUser })(Login);
+export default connect(null, {
+  signinUser, fetchUser, fetchCourts, fetchGames,
+})(Login);
 
 // <Button title="Login"
 //   style={styles.button}
