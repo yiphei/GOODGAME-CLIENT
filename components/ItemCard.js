@@ -168,9 +168,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: 'white',
     fontWeight: '700',
-    fontSize: 44,
+    fontSize: 34,
     margin: 10,
-    
+
   },
 
 });
