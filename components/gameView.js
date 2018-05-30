@@ -149,19 +149,19 @@ class GameView extends Component {
   RenderALL = () => {
     if (this.state.isEditing === false) {
       return (
-        <View>
+        <View style={styles.game}>
           <ScrollView>
-            <View style={styles.game}>
-              <Text style={styles.gameText}> Date: {this.props.game.date} </Text>
-              <Text style={styles.gameText}> Time: {this.props.game.time} </Text>
-              <Text style={styles.gameText}> Duration: {this.props.game.duration} </Text>
-              <Text style={styles.gameText}> Players needed: {this.props.game.players_needed} </Text>
-              <Text style={styles.gameText}> Max Players: {this.props.game.max_players} </Text>
-              <Text style={styles.gameText}> Skill Level: {this.props.game.level} </Text>
-              {this.renderUsers()}
-              {this.renderButton()}
-              {this.renderEditDelete()}
+            <Text style={styles.dateText}> Date: {this.props.game.date} </Text>
+            <Text style={styles.timeText}> Time: {this.props.game.time} </Text>
+            <View style={styles.gameDetails}>
+              <Text style={styles.durationText}> Duration: {this.props.game.duration} </Text>
+              <Text style={styles.playersNeededText}> Players needed: {this.props.game.players_needed} </Text>
+              <Text style={styles.maxPlayersText}> Max Players: {this.props.game.max_players} </Text>
+              <Text style={styles.levelText}> Skill Level: {this.props.game.level} </Text>
             </View>
+            {this.renderUsers()}
+            {this.renderButton()}
+            {this.renderEditDelete()}
           </ScrollView>
         </View>
       );
@@ -250,35 +250,27 @@ class GameView extends Component {
 
   render() {
     return (
-      <ImageBackground
-        source={background}
-        style={styles.container}
-      >
+      <View style={styles.container} >
         {this.RenderALL()}
-      </ImageBackground>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     resizeMode: 'cover',
     width: undefined,
     height: undefined,
-    backgroundColor: 'transparent',
-  },
-  topDescription: {
-    height: 60,
-    backgroundColor: '#FF0000BB',
-    fontWeight: 'bold',
-    fontSize: 30,
+    backgroundColor: '#ffffff',
   },
   game: {
-    borderRadius: 30,
-    borderWidth: 10,
-    borderColor: '#000000',
-    backgroundColor: '#99999944',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   gameText: {
     fontFamily: 'Helvetica-Bold',
