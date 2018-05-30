@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
 });
 
 const cards = [
-
   {
     id: '0',
     title: 'Game Played at 5:00pm, 5/29/2018',
@@ -63,7 +62,14 @@ const cards = [
 class PostEvaList extends Component {
   // constructor(props) {
   //   super(props);
+  //   this.state = {
+  //     messages: [],
+  //     typingText: null,
+  //     step: 0,
+  //   };
+  //
   // }
+
   componentDidMount() {
     this.props.fetchGames();
     // this.props.fetchCourts();
@@ -103,47 +109,53 @@ class PostEvaList extends Component {
 
     const gamelistss = this.props.games.all;
     const cardss = [];
-    const gifNumb = Math.floor(Math.random() * 5) + 1;
+    // const gifNumb = Math.floor(Math.random() * 5) + 1;
     gamelistss.forEach((game) => {
       console.log('game', game);
-      switch (gifNumb) {
-        case 1:
-          cardss.push({
-            id: '1',
-            title: `Game at ${game.time}`,
-            /* eslint global-require: "error" */
-            picture: require('../assets/eval_1.gif'),
-            content: <Evaluation />,
-          });
-          break;
-        case 2:
-          cardss.push({
-            id: '2',
-            title: `Game at ${game.time}`,
-            /* eslint global-require: "error" */
-            picture: require('../assets/eval_2.gif'),
-            content: <Evaluation />,
-          });
-          break;
-        case 3:
-          cardss.push({
-            id: '3',
-            title: `Game at ${game.time}`,
-            /* eslint global-require: "error" */
-            picture: require('../assets/eval_3.gif'),
-            content: <Evaluation />,
-          });
-          break;
-        default:
-          cardss.push({
-            id: '4',
-            title: `Game at ${game.time}`,
-            /* eslint global-require: "error" */
-            picture: require('../assets/eval_4.gif'),
-            content: <Evaluation />,
-          });
-      }
-      // picture: require(`../assets/eval_${gifNumb}.gif`), // eslint-disable-line global-require
+      // switch (gifNumb) {
+      //   case 1:
+      //     cardss.push({
+      //       id: '1',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_1.gif'),
+      //       content: <Evaluation />,
+      //     });
+      //     break;
+      //   case 2:
+      //     cardss.push({
+      //       id: '2',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_2.gif'),
+      //       content: <Evaluation />,
+      //     });
+      //     break;
+      //   case 3:
+      //     cardss.push({
+      //       id: '3',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_3.gif'),
+      //       content: <Evaluation />,
+      //     });
+      //     break;
+      //   default:
+      //     cardss.push({
+      //       id: '4',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_4.gif'),
+      //       content: <Evaluation />,
+      //     });
+      // }
+      cardss.push({
+        id: '4',
+        title: `Game Playe at ${game.time}`,
+        /* eslint global-require: "error" */
+        picture: require('../assets/eval_1.gif'),
+        content: <Evaluation />,
+      });
     });
 
     return (

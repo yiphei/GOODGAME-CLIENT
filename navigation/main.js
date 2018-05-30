@@ -7,7 +7,7 @@ import SignUp from '../components/signup';
 import GameView from '../components/gameView';
 import CreateGame from '../components/createGame';
 import MainTabBar from './main-tab-bar';
-
+import ChooseLocation from '../components/chooseLocation';
 
 const Main = createStackNavigator(
   {
@@ -17,6 +17,7 @@ const Main = createStackNavigator(
     SignUp,
     MainTabBar,
     GameView,
+    ChooseLocation,
   },
   {
     initialRouteName: 'Login',

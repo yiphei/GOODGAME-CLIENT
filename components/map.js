@@ -56,6 +56,7 @@ class Map extends Component {
   componentDidMount() {
     console.log('componentdidmount');
     this.props.fetchCourts();
+    this.props.fetchGames();
 
 
     // this.props.fetchCourt(this.props.courts[0]);

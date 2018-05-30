@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, ImageBackground, View, Button, Animated, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchGames } from '../actions';
+import { fetchGames, findGames } from '../actions';
 
 const background = require('../img/court.png');
 
@@ -14,19 +14,22 @@ class Home extends Component {
     this.props.navigation.navigate('GameView', { game });
   }
 
+  // <TouchableOpacity onPress={() => { this.showGameDetail(game); }} style={styles.game}>
+  //   <Text style={styles.gameText}> Date: {game.date} </Text>
+  //   <Text style={styles.gameText}> Time: {game.time} </Text>
+  //   <Text style={styles.gameText}> Duration: {game.duration} </Text>
+  //   <Text style={styles.gameText}> Players:{game.players} </Text>
+  //   <Text style={styles.gameText}> Max Players: {game.max_players} </Text>
+  //   <Text style={styles.gameText}> Skill Level: {game.level} </Text>
+  // </TouchableOpacity>
+
   renderGames() {
-    console.log(this.props.games);
-    const gameList = this.props.games.all.map(game =>
-      (
-        <TouchableOpacity onPress={() => { this.showGameDetail(game); }} style={styles.game}>
-          <Text style={styles.gameText}> Date: {game.date} </Text>
-          <Text style={styles.gameText}> Time: {game.time} </Text>
-          <Text style={styles.gameText}> Duration: {game.duration} </Text>
-          <Text style={styles.gameText}> Players:{game.players} </Text>
-          <Text style={styles.gameText}> Max Players: {game.max_players} </Text>
-          <Text style={styles.gameText}> Skill Level: {game.level} </Text>
-        </TouchableOpacity>
-      ));
+    // this.props.findGames(this.props.userGameIds);
+    console.log(this.props.userGameIds);
+    // const gameList = this.props.userGameIds.map(game =>
+    //   (
+    //     console.log(gameList)
+    //   ));
     return (
       <View>
         <Text style={styles.topDescription}> Your games </Text>
@@ -48,7 +51,7 @@ class Home extends Component {
             { useNativeDriver: true },
           )}
           contentContainerStyle={styles.endPadding}
-        >{gameList}
+        >{}
         </Animated.ScrollView>
       </View>
     );
@@ -107,8 +110,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
   {
-    games: state.games,
+    games: state.games.all,
+    userGameIds: state.user,
+    userGames: state.games.select,
   }
 );
 
-export default connect(mapStateToProps, { fetchGames })(Home);
+export default connect(mapStateToProps, { fetchGames, findGames })(Home);
