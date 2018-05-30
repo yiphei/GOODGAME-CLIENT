@@ -74,6 +74,9 @@ export function updateCourt(court) {
       dispatch({ type: 'UPDATE_COURT', payload: court });
     }).catch((error) => {
       console.log(error);
+    });
+  };
+}
 
 export function fetchCourt(id) {
   return (dispatch) => {
@@ -84,7 +87,6 @@ export function fetchCourt(id) {
       dispatch({ type: 'FETCH_COURT', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchCourt');
-
     });
   };
 }
@@ -275,7 +277,6 @@ export function createGame(post) {
     };
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-
       // dispatch({ type: 'CREATE_POST', payload: response.data });
       console.log(response.data);
       axios.put(`${ROOT_URL}/user`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((resp) => {

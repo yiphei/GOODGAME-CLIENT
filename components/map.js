@@ -56,6 +56,7 @@ class Map extends Component {
   componentDidMount() {
     console.log('componentdidmount');
     this.props.fetchCourts();
+    this.props.fetchGames();
 
 
     // this.props.fetchCourt(this.props.courts[0]);
@@ -351,4 +352,3 @@ const mapStateToProps = state => (
 export default connect(mapStateToProps, actions)(Map);
 // export default connect(mapStateToProps, { fetchCourts, fetchCourt })(Map);
 // AppRegistry.registerComponent('mapfocus', () => screens);
-
