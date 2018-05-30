@@ -8,7 +8,7 @@ In this part, we implemented pre-game evaluation, create/join/delete a game and 
 
 # Post-game evaluation
 
-After the user has played a game, he/she should be able to evaluate the fellow played which they have just played with. For each of the fellow players, the user could either 'like' or 'dislike' them. All the feedbacks will be stored and processed to update each player's score. The overall evaluation would affect each player's score either positively or negatively. For overall positive feedback, the system would boost up a player's score. For overall negative feedback, the system would decrease a player's score.
+After the user has played a game, he/she should be able to evaluate the fellow players which they have just played with. For each of the fellow players, the user could either 'like' or 'dislike' them. All the feedbacks will be stored and processed to update each player's score. The overall evaluation would affect each player's score either positively or negatively. For overall positive feedback, the system would boost up a player's score. For overall negative feedback, the system would decrease a player's score.
 
 ## Flow
 

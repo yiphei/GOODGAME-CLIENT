@@ -18,6 +18,7 @@ export const ActionTypes = {
   FETCH_USER: 'FETCH_USER',
   FETCH_USERS: 'FETCH_USERS',
   UPDATE_POSTGAMEVALUTAION: 'UPDATE_POSTGAMEVALUTAION',
+  ADD_PLAYER: 'ADD_PLAYER',
 };
 
 export function createCourt(court) {
@@ -87,21 +88,15 @@ export function fetchGames() {
 }
 
 // axios PUT
-export function updateGame(game) {
+export function updateGame(id, game) {
+  console.log('IN UPDATEGAME');
   return (dispatch) => {
-    const id = game._id;
-    const fields = {
-      id: game._id, title: game.title, content: game.content, tags: game.tags, cover_url: game.cover_url,
-    };
-    console.log(game);
-    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
-    axios.put(`${ROOT_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.put(`${ROOT_URL}/postssss/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       // console.log('in updatePost', response.data);
-      console.log('in updatePost');
-      fetchGames();
+      console.log('UPDATEGAME SUCCESS');
       dispatch({ type: 'UPDATE_POST', payload: game });
     }).catch((error) => {
-      console.log('error occured during updatePost');
+      console.log('error occured during updateGame');
     });
   };
 }
@@ -128,15 +123,37 @@ export function updatePostGameEvaluation(game, postGameEval) {
 
 
 export function joinGame(id, game) {
-  console.log('Inside join game');
-  console.log(game);
+  console.log('Inside JOINGAME');
   return (dispatch) => {
     axios.put(`${ROOT_URL}/posts/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-    // do something with response.data  (some json)
-      console.log(response);
-      dispatch({
-        type: ActionTypes.UPDATE_POST,
-        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
+      console.log('BEFORE TRYING TO ADD GAME TO USER');
+      console.log(response.data);
+      axios.put(`${ROOT_URL}/user/addgame`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+        console.log('AFTER TRYING TO ADD GAME TO USER');
+
+        axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
+          console.log('AFTER JOINGAME FETCHGAME');
+          const game2 = response.data;
+
+          axios.get(`${ROOT_URL}/user`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+            console.log('AFTER JOINGAME FETCHUSER');
+            console.log(response.data);
+            console.log('BUILDING THE PACKET');
+            const packet = { game: game2, user: response.data };
+            console.log(packet);
+            dispatch({
+              type: ActionTypes.ADD_PLAYER,
+              payload: packet, // i put fields here instead of const updated because the backend does not return the updated post
+            });
+          }).catch((error) => {
+            console.log('error occured during fetchUser');
+          });
+        }).catch((error) => {
+          console.log('error occured during fetchPosts');
+        });
+      }).catch((error) => {
+        // hit an error do something else!
+        console.log('error');
       });
     }).catch((error) => {
     // hit an error do something else!
@@ -146,16 +163,38 @@ export function joinGame(id, game) {
 }
 
 
-export function UserAddGame(game) {
-  console.log('Inside UserAddGame game');
-  console.log(game);
+export function leaveGame(id, game) {
+  console.log('Inside LeaveGame');
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/user`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-    // do something with response.data  (some json)
-      console.log(response);
-      dispatch({
-        type: ActionTypes.FETCH_USER,
-        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
+    axios.put(`${ROOT_URL}/posts/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      console.log('BEFORE TRYING TO DELETE GAME TO USER');
+      console.log(response.data);
+      axios.put(`${ROOT_URL}/user/delgame`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+        console.log('AFTER TRYING TO DELETE GAME TO USER');
+
+        axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
+          console.log('AFTER LeaveGame FETCHGAME');
+          const game2 = response.data;
+
+          axios.get(`${ROOT_URL}/user`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+            console.log('AFTER LeaveGame FETCHUSER');
+            console.log(response.data);
+            console.log('BUILDING THE PACKET');
+            const packet = { game: game2, user: response.data };
+            console.log(packet);
+            dispatch({
+              type: ActionTypes.ADD_PLAYER,
+              payload: packet, // i put fields here instead of const updated because the backend does not return the updated post
+            });
+          }).catch((error) => {
+            console.log('error occured during fetchUser');
+          });
+        }).catch((error) => {
+          console.log('error occured during fetchPosts');
+        });
+      }).catch((error) => {
+        // hit an error do something else!
+        console.log('error');
       });
     }).catch((error) => {
     // hit an error do something else!
@@ -163,14 +202,13 @@ export function UserAddGame(game) {
     });
   };
 }
+
 
 // axios GET
 export function fetchGame(id) {
   return (dispatch) => {
     // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
-    console.log('fetchpost ', id);
     axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
-      console.log('in fetchGame');
       dispatch({ type: 'FETCH_POST', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchPosts');
@@ -190,16 +228,15 @@ export function createGame(post) {
       max_players: post.max_players,
       level: post.level,
     };
-    console.log('INSIDE');
-    console.log(fields);
-    console.log(localStorage.getItem('token'));
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      console.log('in createGame');
-      fetchGames();
-      dispatch({ type: 'CREATE_POST', payload: null });
-      console.log(response.data);
-      // dispatch({ type: 'CREATE_POST', payload: response.data });
+      axios.put(`${ROOT_URL}/user`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      // do something with response.data  (some json)
+        dispatch({ type: 'CREATE_POST', payload: null });
+      }).catch((error) => {
+      // hit an error do something else!
+        console.log('IN CREATEGAME: ADDED FAILURE');
+      });
     }).catch((error) => {
       console.log(error.response);
     });
@@ -249,6 +286,7 @@ export function signinUser({ email, password }) {
 
 // export function signupUser({ email, password, handle }, history) {
 export function signupUser(user) {
+  console.log('user in sign up user', user);
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   return (dispatch) => {
@@ -282,9 +320,9 @@ export function signoutUser(history) {
 export function fetchUser() {
   return (dispatch) => {
     // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
-    console.log('in REACT fetchuser ');
+    // console.log('in REACT fetchuser ');
     axios.get(`${ROOT_URL}/user`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      console.log('in fetchuser SUCCESS', response.data);
+      // console.log('in fetchuser SUCCESS', response.data);
       dispatch({ type: 'FETCH_USER', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchUser');
