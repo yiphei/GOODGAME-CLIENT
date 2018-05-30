@@ -14,11 +14,11 @@ import PostEvaList from '../components/postEvaList';
 
 const MainTabBar = createBottomTabNavigator(
   {
+    Map,
     Home,
     CreateGame,
-    CreateCourt,
+    // CreateCourt,
     Profile4,
-    Map,
     // Evaluation,
     PostEvaList,
   },
