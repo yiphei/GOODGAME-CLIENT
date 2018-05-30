@@ -123,8 +123,8 @@ class ItemCard extends React.Component {
                 <TouchableWithoutFeedback onPress={this.props.onClose} >
                   <View style={{
                     position: 'absolute',
-                    top: 26,
-                    right: 26,
+                    top: 20,
+                    right: 20,
                   }}
                   >
                     {this.props.closeIcon || <Text>X</Text>}
@@ -169,6 +169,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '700',
     fontSize: 44,
+    margin: 10,
+    
   },
 
 });
