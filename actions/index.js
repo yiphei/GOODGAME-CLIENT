@@ -20,6 +20,7 @@ export const ActionTypes = {
   FETCH_USER: 'FETCH_USER',
   FETCH_USERS: 'FETCH_USERS',
   UPDATE_POSTGAMEVALUTAION: 'UPDATE_POSTGAMEVALUTAION',
+  ADD_PLAYER: 'ADD_PLAYER',
 };
 
 export function createCourt(court) {
@@ -73,6 +74,17 @@ export function updateCourt(court) {
       dispatch({ type: 'UPDATE_COURT', payload: court });
     }).catch((error) => {
       console.log(error);
+
+export function fetchCourt(id) {
+  return (dispatch) => {
+    // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+    console.log('fetchcourt ', id);
+    axios.get(`${ROOT_URL}/courts/${id}`).then((response) => {
+      console.log('fetchCourt response ', response.data);
+      dispatch({ type: 'FETCH_COURT', payload: response.data });
+    }).catch((error) => {
+      console.log('error occured during fetchCourt');
+
     });
   };
 }
@@ -125,8 +137,6 @@ export function fetchGames() {
 // axios PUT
 export function updateGame(id, game) {
   console.log('IN UPDATEGAME');
-  console.log(id);
-  console.log(game);
   return (dispatch) => {
     axios.put(`${ROOT_URL}/postssss/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       // console.log('in updatePost', response.data);
@@ -160,13 +170,37 @@ export function updatePostGameEvaluation(game, postGameEval) {
 
 
 export function joinGame(id, game) {
-  console.log('Inside join game');
+  console.log('Inside JOINGAME');
   return (dispatch) => {
     axios.put(`${ROOT_URL}/posts/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-    // do something with response.data  (some json)
-      dispatch({
-        type: ActionTypes.UPDATE_POST,
-        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
+      console.log('BEFORE TRYING TO ADD GAME TO USER');
+      console.log(response.data);
+      axios.put(`${ROOT_URL}/user/addgame`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+        console.log('AFTER TRYING TO ADD GAME TO USER');
+
+        axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
+          console.log('AFTER JOINGAME FETCHGAME');
+          const game2 = response.data;
+
+          axios.get(`${ROOT_URL}/user`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+            console.log('AFTER JOINGAME FETCHUSER');
+            console.log(response.data);
+            console.log('BUILDING THE PACKET');
+            const packet = { game: game2, user: response.data };
+            console.log(packet);
+            dispatch({
+              type: ActionTypes.ADD_PLAYER,
+              payload: packet, // i put fields here instead of const updated because the backend does not return the updated post
+            });
+          }).catch((error) => {
+            console.log('error occured during fetchUser');
+          });
+        }).catch((error) => {
+          console.log('error occured during fetchPosts');
+        });
+      }).catch((error) => {
+        // hit an error do something else!
+        console.log('error');
       });
     }).catch((error) => {
     // hit an error do something else!
@@ -177,51 +211,37 @@ export function joinGame(id, game) {
 
 
 export function leaveGame(id, game) {
-  console.log('Inside leave game');
-  console.log(game);
+  console.log('Inside LeaveGame');
   return (dispatch) => {
     axios.put(`${ROOT_URL}/posts/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-    // do something with response.data  (some json)
-      console.log('SUCCESS');
-      console.log(response);
-      dispatch({
-        type: ActionTypes.UPDATE_POST,
-        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
-      });
-    }).catch((error) => {
-    // hit an error do something else!
-      console.log('error');
-    });
-  };
-}
+      console.log('BEFORE TRYING TO DELETE GAME TO USER');
+      console.log(response.data);
+      axios.put(`${ROOT_URL}/user/delgame`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+        console.log('AFTER TRYING TO DELETE GAME TO USER');
 
+        axios.get(`${ROOT_URL}/posts/${id}`).then((response) => {
+          console.log('AFTER LeaveGame FETCHGAME');
+          const game2 = response.data;
 
-export function UserAddGame(game) {
-  console.log('Inside UserAddGame game');
-  return (dispatch) => {
-    axios.put(`${ROOT_URL}/user`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-    // do something with response.data  (some json)
-      dispatch({
-        type: ActionTypes.FETCH_USER,
-        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
-      });
-    }).catch((error) => {
-    // hit an error do something else!
-      console.log('error');
-    });
-  };
-}
-
-export function UserDeleteGame(game) {
-  console.log('Inside UserDeleteGame game');
-  console.log(game);
-  return (dispatch) => {
-    axios.put(`${ROOT_URL}/user`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-    // do something with response.data  (some json)
-      console.log(response);
-      dispatch({
-        type: ActionTypes.FETCH_USER,
-        payload: game, // i put fields here instead of const updated because the backend does not return the updated post
+          axios.get(`${ROOT_URL}/user`, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+            console.log('AFTER LeaveGame FETCHUSER');
+            console.log(response.data);
+            console.log('BUILDING THE PACKET');
+            const packet = { game: game2, user: response.data };
+            console.log(packet);
+            dispatch({
+              type: ActionTypes.ADD_PLAYER,
+              payload: packet, // i put fields here instead of const updated because the backend does not return the updated post
+            });
+          }).catch((error) => {
+            console.log('error occured during fetchUser');
+          });
+        }).catch((error) => {
+          console.log('error occured during fetchPosts');
+        });
+      }).catch((error) => {
+        // hit an error do something else!
+        console.log('error');
       });
     }).catch((error) => {
     // hit an error do something else!
@@ -255,6 +275,7 @@ export function createGame(post) {
     };
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+
       // dispatch({ type: 'CREATE_POST', payload: response.data });
       console.log(response.data);
       axios.put(`${ROOT_URL}/user`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((resp) => {

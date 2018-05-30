@@ -1,4 +1,4 @@
-/* eslint react/no-mixed-operators: 0 */
+/* eslint no-mixed-operators: 0 */
 import React, { Component } from 'react';
 import { Dimensions, ListView, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';

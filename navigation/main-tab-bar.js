@@ -44,10 +44,10 @@ const MainTabBar = createBottomTabNavigator(
     },
     // YourGames,
     // CreateCourt,
-    Profile: {
-      screen: Profile,
+    Profile4: {
+      screen: Profile4,
       navigationOptions: ({ navigation }) => ({
-        tabBarLabel: 'Profile',
+        tabBarLabel: 'Profile4',
         tabBarIcon: ({ focused }) => (
           <Ionicons
             name="user"
@@ -86,7 +86,7 @@ const MainTabBar = createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Map',
   },
 );
 
