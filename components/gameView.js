@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text, StyleSheet, ImageBackground, View, Button, ScrollView, TextInput } from 'react-native';
-import { fetchGame, joinGame, deleteGame, UserAddGame, fetchUser, leaveGame, UserDeleteGame, updateGame } from '../actions/index';
+import { fetchGame, joinGame, deleteGame, fetchUser, leaveGame, updateGame } from '../actions/index';
 
 const background = require('../img/court.png');
 
@@ -29,9 +29,6 @@ class GameView extends Component {
 
   onJoinClick = () => {
     this.props.joinGame(this.props.navigation.state.params.game._id, this.props.game);
-    this.props.UserAddGame(this.props.game);
-    // setTimeout(this.props.fetchGame(this.props.navigation.state.params.game._id), 30000);
-    // setTimeout(this.props.fetchUser(), 30000);
   }
 
   onDeleteClick = () => {
@@ -67,15 +64,7 @@ class GameView extends Component {
   }
 
   onLeaveClick = () => {
-    console.log('In onLeaveClick');
-    console.log(this.props.game);
-    console.log(this.props.user);
-    console.log('END');
     this.props.leaveGame(this.props.navigation.state.params.game._id, this.props.game);
-    this.props.UserDeleteGame(this.props.game);
-    console.log('BEFORE A');
-    console.log(this.props.user);
-    console.log('AFTER A');
   }
 
 
@@ -306,5 +295,5 @@ const mapStateToProps = state => (
 );
 
 export default connect(mapStateToProps, {
-  fetchGame, joinGame, deleteGame, UserAddGame, fetchUser, leaveGame, UserDeleteGame, updateGame,
+  fetchGame, joinGame, deleteGame, fetchUser, leaveGame, updateGame,
 })(GameView);
