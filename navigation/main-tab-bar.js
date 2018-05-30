@@ -16,13 +16,26 @@ import YourGames from '../components/your-game';
 
 const MainTabBar = createBottomTabNavigator(
   {
-    Home: {
-      screen: Home,
+    // Home: {
+    //   screen: Home,
+    //   navigationOptions: ({ navigation }) => ({
+    //     tabBarLabel: 'Home',
+    //     tabBarIcon: ({ focused }) => (
+    //       <Ionicons
+    //         name="home"
+    //         size={26}
+    //         color={focused ? '#58AADA' : 'grey'}
+    //       />
+    //     ),
+    //   }),
+    // },
+    Map: {
+      screen: Map,
       navigationOptions: ({ navigation }) => ({
-        tabBarLabel: 'Home',
+        tabBarLabel: 'Map',
         tabBarIcon: ({ focused }) => (
           <Ionicons
-            name="home"
+            name="compass"
             size={26}
             color={focused ? '#58AADA' : 'grey'}
           />
@@ -51,19 +64,6 @@ const MainTabBar = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => (
           <Ionicons
             name="user"
-            size={26}
-            color={focused ? '#58AADA' : 'grey'}
-          />
-        ),
-      }),
-    },
-    Map: {
-      screen: Map,
-      navigationOptions: ({ navigation }) => ({
-        tabBarLabel: 'Map',
-        tabBarIcon: ({ focused }) => (
-          <Ionicons
-            name="compass"
             size={26}
             color={focused ? '#58AADA' : 'grey'}
           />
