@@ -267,6 +267,7 @@ export function signinUser({ email, password }) {
 
 // export function signupUser({ email, password, handle }, history) {
 export function signupUser(user) {
+  console.log('user in sign up user', user);
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   return (dispatch) => {
