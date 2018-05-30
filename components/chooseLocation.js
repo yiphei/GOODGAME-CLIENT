@@ -17,7 +17,7 @@ class Choose extends Component {
     };
     this.courtOne = this.courtOne.bind(this);
     this.courtTwo = this.courtTwo.bind(this);
-    this.courtThree = this.courtThree.bind(this);
+    // this.courtThree = this.courtThree.bind(this);
   }
 
   componentDidMount() {
@@ -26,33 +26,39 @@ class Choose extends Component {
   }
 
   courtOne() {
-    console.log('should be game id');
-    console.log(this.props.courts[0]._id);
     this.setState({
       location: this.props.courts[0]._id,
     });
     this.props.courts[0].game_list.push(this.props.game._id);
     this.props.addGameToCourt(this.props.courts[0]._id, this.props.courts[0].game_list);
+    this.props.fetchCourts();
+    this.props.navigation.navigate('Map');
   }
 
   courtTwo() {
     this.setState({
       location: this.props.courts[1]._id,
     });
+    this.props.courts[1].game_list.push(this.props.game._id);
+    this.props.addGameToCourt(this.props.courts[1]._id, this.props.courts[1].game_list);
+    this.props.fetchCourts();
+    this.props.navigation.navigate('Map');
   }
 
-  courtThree() {
-    this.setState({
-      location: this.props.courts[2]._id,
-    });
-  }
+  // courtThree() {
+  //   this.setState({
+  //     location: this.props.courts[2]._id,
+  //   });
+  //   this.props.courts[2].game_list.push(this.props.game._id);
+  //   this.props.addGameToCourt(this.props.courts[2]._id, this.props.courts[1].game_list);
+  //   this.props.navigation.navigate('Map');
+  // }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Alumni Gym" onPress={() => this.courtOne()} />
-        <Button title="Location 2" onPress={() => this.courtTwo()} />
-        <Button title="Location 3" onPress={() => this.courtThree()} />
+        <Button title="Alumni Gym Outdoors" onPress={() => this.courtOne()} />
+        <Button title="Alumni Gym" onPress={() => this.courtTwo()} />
       </View>
     );
   }
