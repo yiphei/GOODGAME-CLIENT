@@ -23,7 +23,7 @@ const MainTabBar = createBottomTabNavigator(
     PostEvaList,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Map',
   },
 );
 

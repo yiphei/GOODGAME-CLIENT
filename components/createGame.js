@@ -28,7 +28,7 @@ class Home extends Component {
       date: this.state.date,
       time: this.state.time,
       duration: this.state.duration,
-      lat: this.state.lat,
+      lat: this.state.lat, // replace with location
       long: this.state.long,
       players_needed: this.state.players_needed,
       max_players: this.state.max_players,

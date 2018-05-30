@@ -58,6 +58,19 @@ export function fetchCourts() {
   };
 }
 
+export function fetchCourt(id) {
+  return (dispatch) => {
+    // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
+    console.log('fetchcourt ', id);
+    axios.get(`${ROOT_URL}/courts/${id}`).then((response) => {
+      console.log('fetchCourt response ', response.data);
+      dispatch({ type: 'FETCH_COURT', payload: response.data });
+    }).catch((error) => {
+      console.log('error occured during fetchCourt');
+    });
+  };
+}
+
 export function fetchGames() {
   // Action Creator returns a function
   // that gets called b the middleware passing in dispatch to it as an arg
