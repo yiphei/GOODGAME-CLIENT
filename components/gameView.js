@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text, StyleSheet, ImageBackground, View, Button, ScrollView, TextInput } from 'react-native';
-import { fetchGame, joinGame, deleteGame, UserAddGame, fetchUser, leaveGame, UserDeleteGame } from '../actions/index';
+import { fetchGame, joinGame, deleteGame, UserAddGame, fetchUser, leaveGame, UserDeleteGame, updateGame } from '../actions/index';
 
 const background = require('../img/court.png');
 
@@ -30,8 +30,8 @@ class GameView extends Component {
   onJoinClick = () => {
     this.props.joinGame(this.props.navigation.state.params.game._id, this.props.game);
     this.props.UserAddGame(this.props.game);
-    // this.props.fetchUser();
-    // this.props.fetchGame(this.props.navigation.state.params.game._id);
+    // setTimeout(this.props.fetchGame(this.props.navigation.state.params.game._id), 30000);
+    // setTimeout(this.props.fetchUser(), 30000);
   }
 
   onDeleteClick = () => {
@@ -73,8 +73,6 @@ class GameView extends Component {
     console.log('END');
     this.props.leaveGame(this.props.navigation.state.params.game._id, this.props.game);
     this.props.UserDeleteGame(this.props.game);
-    this.props.fetchUser();
-    this.props.fetchGame(this.props.navigation.state.params.game._id);
     console.log('BEFORE A');
     console.log(this.props.user);
     console.log('AFTER A');
@@ -144,6 +142,17 @@ class GameView extends Component {
 
   gameUpdate = () => {
     // call updatePost here
+    console.log('INSIDE UPDATE GAMEVIEW');
+    const newgame = {
+      date: this.state.date,
+      time: this.state.time,
+      duration: this.state.duration,
+      players_needed: this.state.players_needed,
+      max_players: this.state.max_players,
+      level: this.state.level,
+    };
+    console.log(newgame);
+    this.props.updateGame(this.props.navigation.state.params.game._id, Object.assign({}, this.props.game, newgame));
     this.setState({ isEditing: false });
   }
 
@@ -297,5 +306,5 @@ const mapStateToProps = state => (
 );
 
 export default connect(mapStateToProps, {
-  fetchGame, joinGame, deleteGame, UserAddGame, fetchUser, leaveGame, UserDeleteGame,
+  fetchGame, joinGame, deleteGame, UserAddGame, fetchUser, leaveGame, UserDeleteGame, updateGame,
 })(GameView);

@@ -123,21 +123,17 @@ export function fetchGames() {
 }
 
 // axios PUT
-export function updateGame(game) {
+export function updateGame(id, game) {
+  console.log('IN UPDATEGAME');
+  console.log(id);
+  console.log(game);
   return (dispatch) => {
-    const id = game._id;
-    const fields = {
-      id: game._id, title: game.title, content: game.content, tags: game.tags, cover_url: game.cover_url,
-    };
-    console.log(game);
-    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
-    axios.put(`${ROOT_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+    axios.put(`${ROOT_URL}/postssss/${id}`, game, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
       // console.log('in updatePost', response.data);
-      console.log('in updatePost');
-      fetchGames();
+      console.log('UPDATEGAME SUCCESS');
       dispatch({ type: 'UPDATE_POST', payload: game });
     }).catch((error) => {
-      console.log('error occured during updatePost');
+      console.log('error occured during updateGame');
     });
   };
 }
@@ -257,16 +253,18 @@ export function createGame(post) {
       max_players: post.max_players,
       level: post.level,
     };
-    console.log('INSIDE');
-    console.log(fields);
-    console.log(localStorage.getItem('token'));
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      console.log('here is the response');
-      console.log(response);
-      fetchGames();
-      dispatch({ type: 'CREATE_POST', payload: response.data });
       // dispatch({ type: 'CREATE_POST', payload: response.data });
+      console.log(response.data);
+      axios.put(`${ROOT_URL}/user`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((resp) => {
+      // do something with response.data  (some json)
+        console.log('IN CREATEGAME: ADDED SUCCESS');
+        dispatch({ type: 'CREATE_POST', payload: response.data });
+      }).catch((error) => {
+      // hit an error do something else!
+        console.log('IN CREATEGAME: ADDED FAILURE');
+      });
     }).catch((error) => {
       console.log(error);
     });
@@ -316,6 +314,7 @@ export function signinUser({ email, password }) {
 
 // export function signupUser({ email, password, handle }, history) {
 export function signupUser(user) {
+  console.log('user in sign up user', user);
   // takes in an object with email and password (minimal user object)
   // returns a thunk method that takes dispatch as an argument (just like our create post method really)
   return (dispatch) => {
