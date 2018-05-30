@@ -6,9 +6,9 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 const styles = StyleSheet.create({
   mapView: {
     width: 150,
-    height: 100,
+    height: 50,
     borderRadius: 13,
-    margin: 3,
+    margin: 0,
   },
 });
 

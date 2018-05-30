@@ -44,7 +44,7 @@ class CardList extends React.Component {
     this.state = {
       selected: new Map(),
       zoomedStyle: {},
-      maxHeight: 400,
+      maxHeight: 300,
       zoomAnim: new Animated.Value(1),
     };
   }
