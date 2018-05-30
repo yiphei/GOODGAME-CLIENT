@@ -13,12 +13,12 @@ import CustomView from './chatbot/CustomView';
 
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 2 },
   footerContainer: {
-    marginTop: 5,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 5,
+    marginTop: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
   },
   footerText: {
     fontSize: 12,

@@ -40,21 +40,21 @@ const cards = [
     title: 'Game at 3:00pm, 5/29/2018',
     /* eslint global-require: "error" */
     picture: require('../assets/court_2.jpg'), // eslint-disable-line global-require
-    content: <Text>Wheat Field with Cypresses</Text>,
+    content: <Evaluation />,
   },
   {
     id: '2',
     title: 'Game at 6:00pm, 5/30/2018',
     /* eslint global-require: "error" */
     picture: require('../assets/court_3.jpg'), // eslint-disable-line global-require
-    content: <Text>Bedroom in Arles</Text>,
+    content: <Evaluation />,
   },
   {
     id: '3',
     title: 'Game at 6:00pm, 5/30/2018',
     /* eslint global-require: "error" */
     picture: require('../assets/court_4.jpg'), // eslint-disable-line global-require
-    content: <Text>Bedroom in Arles</Text>,
+    content: <Evaluation />,
   },
 ];
 
