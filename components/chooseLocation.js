@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TextInput, Button, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { createGame, fetchCourts } from '../actions';
+import { createGame, fetchCourts, addGameToCourt } from '../actions';
 
 class Choose extends Component {
   constructor(props) {
@@ -22,13 +22,17 @@ class Choose extends Component {
 
   componentDidMount() {
     this.props.fetchCourts();
+    console.log(this.props.game);
   }
 
   courtOne() {
+    console.log('should be game id');
+    console.log(this.props.courts[0]._id);
     this.setState({
       location: this.props.courts[0]._id,
     });
-    this.props.courts[0].push();
+    this.props.courts[0].game_list.push(this.props.game._id);
+    this.props.addGameToCourt(this.props.courts[0]._id, this.props.courts[0].game_list);
   }
 
   courtTwo() {
@@ -66,8 +70,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => (
   {
-    courts: state.courts,
+    courts: state.courts.all,
+    game: state.games.game,
   }
 );
 
-export default connect(mapStateToProps, { createGame, fetchCourts })(Choose);
+export default connect(mapStateToProps, { createGame, fetchCourts, addGameToCourt })(Choose);

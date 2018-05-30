@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, ImageBackground, TextInput, Button, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { createGame, fetchCourts } from '../actions';
+import { createGame, fetchCourts, fetchGame } from '../actions';
 /* eslint-disable camelcase */
 
 // const background = require('../img/court.png');
@@ -14,38 +14,11 @@ class Home extends Component {
       date: '',
       time: '',
       duration: '',
-      location: '',
       players_needed: '',
       max_players: '',
       level: '',
     };
-    this.courtOne = this.courtOne.bind(this);
-    this.courtTwo = this.courtTwo.bind(this);
-    this.courtThree = this.courtThree.bind(this);
     this.gameCreator = this.gameCreator.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.fetchCourts();
-  }
-
-  courtOne() {
-    this.setState({
-      location: this.props.courts[0]._id,
-    });
-    this.props.courts[0].push();
-  }
-
-  courtTwo() {
-    this.setState({
-      location: this.props.courts[1]._id,
-    });
-  }
-
-  courtThree() {
-    this.setState({
-      location: this.props.courts[2]._id,
-    });
   }
 
   gameCreator() {
@@ -64,16 +37,14 @@ class Home extends Component {
       date: this.state.date,
       time: this.state.time,
       duration: this.state.duration,
-      lat: this.state.lat,
-      long: this.state.long,
       players_needed: this.state.players_needed,
       max_players: this.state.max_players,
       level: this.state.level,
     });
     this.props.createGame(this.state);
-
-
-    this.props.navigation.navigate('Home');
+    // this.props.fetchGame();
+    // this.props.navigation.navigate('ChooseLocation',{param:'SomeParameter'});
+    this.props.navigation.navigate('ChooseLocation');
   }
 
   render() {
@@ -86,7 +57,7 @@ class Home extends Component {
           </Text>
           <TextInput
             style={{
-                height: 40, width: 300, borderColor: 'gray', borderWidth: 1,
+ height: 40, width: 270, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
               }}
             onChangeText={date => this.setState({ date })}
             value={this.state.date}
@@ -98,7 +69,7 @@ class Home extends Component {
           </Text>
           <TextInput
             style={{
- height: 40, width: 300, borderColor: 'gray', borderWidth: 1,
+ height: 40, width: 270, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
 }}
             onChangeText={time => this.setState({ time })}
             value={this.state.time}
@@ -110,7 +81,7 @@ class Home extends Component {
           </Text>
           <TextInput
             style={{
- height: 40, width: 300, borderColor: 'gray', borderWidth: 1,
+ height: 40, width: 220, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
 }}
             onChangeText={duration => this.setState({ duration })}
             value={this.state.duration}
@@ -122,7 +93,7 @@ class Home extends Component {
           </Text>
           <TextInput
             style={{
- height: 40, width: 300, borderColor: 'gray', borderWidth: 1,
+ height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
 }}
             onChangeText={players_needed => this.setState({ players_needed })}
             value={this.state.players_needed}
@@ -134,7 +105,7 @@ class Home extends Component {
           </Text>
           <TextInput
             style={{
- height: 40, width: 300, borderColor: 'gray', borderWidth: 1,
+ height: 40, width: 220, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
 }}
             onChangeText={max_players => this.setState({ max_players })}
             value={this.state.max_players}
@@ -146,16 +117,13 @@ class Home extends Component {
           </Text>
           <TextInput
             style={{
- height: 40, width: 300, borderColor: 'gray', borderWidth: 1,
+ height: 40, width: 270, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
 }}
             onChangeText={level => this.setState({ level })}
             value={this.state.level}
           />
         </View>
-        <Button title="Alumni Gym" onPress={() => this.courtOne()} />
-        <Button title="Location 2" onPress={() => this.courtTwo()} />
-        <Button title="Location 3" onPress={() => this.courtThree()} />
-        <Button title="Submit" onPress={() => this.gameCreator()} />
+        <Button title="Press to Choose Court" onPress={() => this.gameCreator()} />
       </View>
     );
   }
@@ -170,10 +138,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   inputField: {
+    marginHorizontal: 20,
     height: 40,
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   topDescription: {
@@ -206,7 +174,7 @@ const mapStateToProps = state => (
   }
 );
 
-export default connect(mapStateToProps, { createGame, fetchCourts })(Home);
+export default connect(mapStateToProps, { createGame, fetchCourts, fetchGame })(Home);
 
 // <ImageBackground
 //   source={background}

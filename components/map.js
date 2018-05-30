@@ -44,48 +44,54 @@ class Map extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchCourts();
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
   componentDidMount() {
+    this.props.fetchCourts();
     // this.props.fetchCourts();
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
-    this.animation.addListener(({ value }) => {
-      let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= this.state.markers.length) {
-        index = this.state.markers.length - 1;
-      }
-      if (index <= 0) {
-        index = 0;
-      }
+    console.log('check1');
+    // this.animation.addListener(({ value }) => {
+    this.props.fetchCourts();
 
-      clearTimeout(this.regionTimeout);
-      this.regionTimeout = setTimeout(() => {
-        if (this.index !== index) {
-          this.index = index;
-          const { coordinate } = {
-            coordinate: {
-              latitude: this.state.markers[index].latitude,
-              longitude: this.state.markers[index].longitude,
-            },
-            title: 'New Court',
-            description: 'Play pick up games at Dartmouth!',
-            image: Images[0],
-          };
-          console.log('court pin rendered');
-          this.map.animateToRegion(
-            {
-              ...coordinate,
-              latitudeDelta: this.state.region.latitudeDelta,
-              longitudeDelta: this.state.region.longitudeDelta,
-            },
-            350,
-          );
-        }
-      }, 10);
-    });
+    console.log('check2');
+    // let index = Math.floor(0 / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+    // if (index >= this.props.courts.length) {
+    //   index = this.props.courts.length - 1;
+    // }
+    // if (index <= 0) {
+    //   index = 0;
+    // }
+
+    clearTimeout(this.regionTimeout);
+    this.regionTimeout = setTimeout(() => {
+      // if (this.index !== index) {
+      //   this.index = index;
+      const coordinate = this.props.courts[0];
+      // const { coordinate } = {
+      //   coordinate: {
+      //     latitude: this.props.courts[0].latitude,
+      //     longitude: this.props.courts[0].longitude,
+      //   },
+      //   title: 'New Court',
+      //   description: 'Play pick up games at Dartmouth!',
+      //   image: Images[0],
+      // };
+      console.log('court pin rendered');
+      this.map.animateToRegion(
+        {
+          ...coordinate,
+          latitudeDelta: this.state.region.latitudeDelta,
+          longitudeDelta: this.state.region.longitudeDelta,
+        },
+        350,
+      );
+      this.render();
+      // }
+    }, 10);
+    // });
   }
 
   markerClick(e) {
@@ -101,7 +107,7 @@ class Map extends Component {
   }
 
   render() {
-    const interpolations = this.state.markers.map((marker, index) => {
+    const interpolations = this.props.courts.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
         index * CARD_WIDTH,
@@ -128,7 +134,7 @@ class Map extends Component {
           style={styles.container}
           onPress={event => this.createMarker(event)}
         >
-          {this.state.markers.map((marker, index) => {
+          {this.props.courts.map((marker, index) => {
             const scaleStyle = {
               transform: [
                 {
@@ -172,7 +178,7 @@ class Map extends Component {
           style={styles.scrollView}
           contentContainerStyle={styles.endPadding}
         >
-          {this.state.markers.map((marker, index) => (
+          {this.props.courts.map((marker, index) => (
             <View style={styles.card} key={index}>
               <Image
                 source={marker.image}
