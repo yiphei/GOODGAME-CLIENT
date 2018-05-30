@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
-import { signinUser } from '../actions/index';
+import { signinUser, fetchUser } from '../actions/index';
 
 const background = require('../img/login.png');
 
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { signinUser })(Login);
+export default connect(null, { signinUser, fetchUser })(Login);
 
 // <Button title="Login"
 //   style={styles.button}

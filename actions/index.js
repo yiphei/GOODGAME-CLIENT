@@ -6,6 +6,8 @@ const ROOT_URL = 'https://good-game.herokuapp.com/api';
 export const ActionTypes = {
   FETCH_COURTS: 'FETCH_COURTS',
   CREATE_COURT: 'CREATE_COURT',
+  UPDATE_COURT: 'UPDATE_COURT',
+  FETCH_BY_ID: 'FETCH_BY_ID',
   FETCH_POSTS: 'FETCH_POSTS',
   FETCH_POST: 'FETCH_POST',
   UPDATE_POST: 'UPDATE_POST',
@@ -58,6 +60,21 @@ export function fetchCourts() {
   };
 }
 
+export function updateCourt(court) {
+  return (dispatch) => {
+    const id = court._id;
+    const fields = {
+      id: court._id, title: court.title, coordinate: court.coordinate, game_list: court.game_list,
+    };
+    console.log(court);
+    // axios.put(`${ROOT_URL}/posts/${id}${API_KEY}`, fields).then((response) => {
+    axios.put(`${ROOT_URL}/posts/${id}`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+      // console.log('in updatePost', response.data);
+      console.log('in updateCourt');
+      dispatch({ type: 'UPDATE_COURT', payload: court });
+    }).catch((error) => {
+      console.log(error);
+
 export function fetchCourt(id) {
   return (dispatch) => {
     // axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`).then((response) => {
@@ -67,7 +84,37 @@ export function fetchCourt(id) {
       dispatch({ type: 'FETCH_COURT', payload: response.data });
     }).catch((error) => {
       console.log('error occured during fetchCourt');
+
     });
+  };
+}
+
+export function addGameToCourt(id, game) {
+  return (dispatch) => {
+    const fields = {
+      game_list: game,
+    };
+    axios.put(`${ROOT_URL}/courts/${id}`, fields).then((response) => {
+      // console.log('in updatePost', response.data);
+      console.log('in updateCourt');
+      dispatch({ type: 'UPDATE_COURT', payload: null });
+    }).catch((error) => {
+      console.log(error.response);
+    });
+  };
+}
+
+export function findGames(idArray) {
+  return (dispatch) => {
+    // axios.get(`${ROOT_URL}/posts${API_KEY}`).then((response) => {
+    axios.find(`${ROOT_URL}/posts`, '_id': { $in: idArray }).then((response) => {
+      // response.data is a json file
+      dispatch({ type: 'FETCH_BY_ID', payload: response.data });
+    }).catch((error) => {
+      console.log('error occured during fetchPosts');
+    });
+    // on the completion we will dispatch an action
+    // can now dispatch stuff
   };
 }
 
@@ -222,23 +269,25 @@ export function createGame(post) {
       date: post.date,
       time: post.time,
       duration: post.duration,
-      lat: post.lat,
-      long: post.long,
       players_needed: post.players_needed,
       max_players: post.max_players,
       level: post.level,
     };
     // axios.post(`${ROOT_URL}/posts${API_KEY}`, fields).then((response) => {
     axios.post(`${ROOT_URL}/posts`, fields, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
-      axios.put(`${ROOT_URL}/user`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((response) => {
+
+      // dispatch({ type: 'CREATE_POST', payload: response.data });
+      console.log(response.data);
+      axios.put(`${ROOT_URL}/user`, response.data, { headers: { authorization: localStorage.getItem('token') } }).then((resp) => {
       // do something with response.data  (some json)
-        dispatch({ type: 'CREATE_POST', payload: null });
+        console.log('IN CREATEGAME: ADDED SUCCESS');
+        dispatch({ type: 'CREATE_POST', payload: response.data });
       }).catch((error) => {
       // hit an error do something else!
         console.log('IN CREATEGAME: ADDED FAILURE');
       });
     }).catch((error) => {
-      console.log(error.response);
+      console.log(error);
     });
   };
 }
@@ -325,7 +374,7 @@ export function fetchUser() {
       // console.log('in fetchuser SUCCESS', response.data);
       dispatch({ type: 'FETCH_USER', payload: response.data });
     }).catch((error) => {
-      console.log('error occured during fetchUser');
+      console.log(error);
     });
   };
 }

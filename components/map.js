@@ -351,3 +351,4 @@ const mapStateToProps = state => (
 export default connect(mapStateToProps, actions)(Map);
 // export default connect(mapStateToProps, { fetchCourts, fetchCourt })(Map);
 // AppRegistry.registerComponent('mapfocus', () => screens);
+
