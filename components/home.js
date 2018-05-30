@@ -23,7 +23,7 @@ class Home extends Component {
           <Text style={styles.gameText}> Date: {game.date} </Text>
           <Text style={styles.gameText}> Time: {game.time} </Text>
           <Text style={styles.gameText}> Duration: {game.duration} </Text>
-          <Text style={styles.gameText}> Players Needed: {game.players_needed} </Text>
+          <Text style={styles.gameText}> Players:{game.players} </Text>
           <Text style={styles.gameText}> Max Players: {game.max_players} </Text>
           <Text style={styles.gameText}> Skill Level: {game.level} </Text>
         </TouchableOpacity>

@@ -48,7 +48,7 @@ class SignUp extends Component {
     if (value != null) {
       console.log('value: ', value.email);
       this.props.signupUser({ email: value.email, password: value.password, handle: value.username });
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('Map');
     }
     // console.log(this.state);
     // this.props.signupUser(this.state);
