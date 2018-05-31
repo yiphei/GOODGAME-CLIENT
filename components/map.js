@@ -115,7 +115,7 @@ class Map extends Component {
     // console.log('render selectedMarker ', this.props.court.game_list);
 
     // console.log(this.cardDraw());
-    console.log('render selectedMarker ', this.props.courts[this.state.selectedMarker]);
+    // console.log('render selectedMarker ', this.props.courts[this.state.selectedMarker]);
     // console.log('this.props.court ', this.props.court);
     const interpolations = this.props.courts.map((marker, index) => {
       const inputRange = [

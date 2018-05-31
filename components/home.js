@@ -16,7 +16,7 @@ class Home extends Component {
   }
 
   renderGames() {
-    this.props.fetchGames();
+    // this.props.fetchGames();
     const gameList = this.props.games.all.map(game =>
       (
         <TouchableOpacity onPress={() => { this.showGameDetail(game); }} style={styles.game}>

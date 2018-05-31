@@ -57,8 +57,8 @@ class Choose extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Alumni Gym Outdoors" onPress={() => this.courtOne()} />
-        <Button title="Alumni Gym" onPress={() => this.courtTwo()} />
+        <Button title="Alumni Gym" onPress={() => this.courtOne()} />
+        <Button title="Alumni Gym Outdoors" onPress={() => this.courtTwo()} />
       </View>
     );
   }
