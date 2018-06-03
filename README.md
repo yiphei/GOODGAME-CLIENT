@@ -28,3 +28,5 @@ The post-game evaluations will either boost up or decrease the players' score. I
 
 -React Native Gifted Chat (source: https://github.com/FaridSafi/react-native-gifted-chat)
 -React Native Cards List (source: https://github.com/dmbfm/react-native-card-list)
+
+# Setup/deployment steps 
