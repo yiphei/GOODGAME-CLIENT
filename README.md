@@ -25,6 +25,9 @@ All the evaluations will only take effect if each pair of the users has done the
 
 The post-game evaluations will either boost up or decrease the players' score. It creates not only the competitiveness in the community but also a sense of credibility. The evaluation would reflect each player's performance in a game which he/she just played. After the player's score has been updated, it would also affect future games' intensity level because for each new game, the system takes all the players' scores into account and calculate an average number to represent the average intensity level of the game. It will also affect the ranking system. If a user wants to have a higher rank, then he/she must improve his/her skills, attitudes, sportsmanship and so on for every single game.
 
+## User Profile 
+User profile code is from https://github.com/nattatorn-dev/react-native-user-profile. 
+
 ## Implementation
 
 ## APIs used
