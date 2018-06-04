@@ -1,114 +1,215 @@
+/* eslint padded-blocks: ["error", "never"] */
+
 import React, { Component } from 'react';
-import { View, StyleSheet, ImageBackground, TextInput, Button } from 'react-native';
-import t from 'tcomb-form-native';
+import { Text, StyleSheet, ImageBackground, View, Button, Animated, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { signinUser, fetchUser, fetchCourts, fetchGames } from '../actions/index';
+// import {
+//
+//   StyleSheet,
+//   Text,
+//   View,
+// } from 'react-native';
 
-const background = require('../img/login.png');
+import { fetchGames, fetchCourts } from '../actions';
+// import { connect } from 'react-redux';
+import CardList from './CardList';
+import ItemCard from './ItemCard';
+import Evaluation from '../components/chatbot';
+// import { fetchUser } from '../actions/index';
+// import { CardList } from 'react-native-card-list';
 
 
-/* eslint no-return-assign: 0 */
-const Form = t.form.Form;
-
-const User = t.struct({
-  email: t.String,
-  password: t.String,
+/* eslint padded-blocks: ["error", "never"] */
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
 });
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '', password: '',
-    };
-    this.signIn = this.signIn.bind(this);
-  }
+const cards = [
+  {
+    id: '0',
+    title: 'Game Played at 5:00pm, 5/29/2018',
+    picture: require('../assets/court_1.jpg'), // eslint-disable-line global-require
+    content: <Evaluation />,
+  },
+  {
+    id: '1',
+    title: 'Game Played at 3:00pm, 5/29/2018',
+    /* eslint global-require: "error" */
+    picture: require('../assets/court_2.jpg'), // eslint-disable-line global-require
+    content: <Evaluation />,
+  },
+  {
+    id: '2',
+    title: 'Game Played at 6:00pm, 5/30/2018',
+    /* eslint global-require: "error" */
+    picture: require('../assets/court_3.jpg'), // eslint-disable-line global-require
+    content: <Evaluation />,
+  },
+  {
+    id: '3',
+    title: 'Game Played at 6:00pm, 5/30/2018',
+    /* eslint global-require: "error" */
+    picture: require('../assets/court_4.jpg'), // eslint-disable-line global-require
+    content: <Evaluation />,
+  },
+];
+
+class PostEvaList extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     messages: [],
+  //     typingText: null,
+  //     step: 0,
+  //   };
+  //
+  // }
 
   componentDidMount() {
-    this.props.fetchCourts();
     this.props.fetchGames();
+    // this.props.fetchCourts();
   }
 
-  signIn() {
-    const value = this._form.getValue(); // use that ref to get the form value
-    console.log('value: ', value);
-    console.log('state: ', this.state);
+  renderGames() {
+    // this.props.fetchGames();
+    // console.log('What is in the this.props.games are: ', this.props.games);
 
+    //
+    // const gameList = this.props.games.all.map(game =>
+    //   (
+    //
+    //     <TouchableOpacity onPress={() => { this.showGameDetail(game); }} style={styles.game}>
+    //       <Text style={styles.gameText}> Date: {game.date} </Text>
+    //       <Text style={styles.gameText}> Time: {game.time} </Text>
+    //       <Text style={styles.gameText}> Duration: {game.duration} </Text>
+    //       <Text style={styles.gameText}> Players:{game.players} </Text>
+    //       <Text style={styles.gameText}> Max Players: {game.max_players} </Text>
+    //       <Text style={styles.gameText}> Skill Level: {game.level} </Text>
+    //     </TouchableOpacity>
+    //
+    //
+    //   // cards.push({});
+    //   //
+    //   // cards.push({
+    //   //   id: '3',
+    //   //   title: game.time,
+    //   //   /* eslint global-require: "error" */
+    //   //   picture: require('../assets/court_4.jpg'), // eslint-disable-line global-require
+    //   //   content: <Evaluation />,
+    //   // });
+    //   // if the title changes and we have another game. Then it succeeds.
+    //
+    //   ));
+    /* eslint guard-for-in: 0 */
+    let gameId = 0;
+    const gamelistss = this.props.games.all;
+    const cardss = [];
+    // const gifNumb = Math.floor(Math.random() * 5) + 1;
+    gamelistss.forEach((game) => {
+      gameId++;
+      console.log('game', game);
+      // switch (gifNumb) {
+      //   case 1:
+      //     cardss.push({
+      //       id: '1',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_1.gif'),
+      //       content: <Evaluation />,
+      //     });
+      //     break;
+      //   case 2:
+      //     cardss.push({
+      //       id: '2',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_2.gif'),
+      //       content: <Evaluation />,
+      //     });
+      //     break;
+      //   case 3:
+      //     cardss.push({
+      //       id: '3',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_3.gif'),
+      //       content: <Evaluation />,
+      //     });
+      //     break;
+      //   default:
+      //     cardss.push({
+      //       id: '4',
+      //       title: `Game at ${game.time}`,
+      //       /* eslint global-require: "error" */
+      //       picture: require('../assets/eval_4.gif'),
+      //       content: <Evaluation />,
+      //     });
+      // }
+      cardss.push({
+        id: gameId,
+        title: `Game Played at ${game.time}`,
+        /* eslint global-require: "error" */
+        picture: require('../assets/eval_1.gif'),
+        content: <Evaluation />,
+      });
+    });
 
-    if (value != null) {
-      console.log('value: ', value.email);
-      this.props.signinUser({ email: value.email, password: value.password });
-      this.props.navigation.navigate('Map');
-    }
-  }
+    return (
+    // <View>
+    // <Text style={styles.topDescription}> Games </Text>
+    // <Animated.ScrollView
+    //   horizontal
+    //   scrollEventThrottle={1}
+    //   showsHorizontalScrollIndicator={false}
+    //   snapToInterval={50}
+    //   onScroll={Animated.event(
+    //     [
+    //       {
+    //         nativeEvent: {
+    //           contentOffset: {
+    //             x: this.animation,
+    //           },
+    //         },
+    //       },
+    //     ],
+    //     { useNativeDriver: true },
+    //   )}
+    //   contentContainerStyle={styles.endPadding}
+    // >{gameList}
+    // </Animated.ScrollView>
+      <CardList cards={cardss} />
 
-
-  signUp() {
-    this.props.navigation.navigate('SignUp');
+    // </View>
+    );
   }
 
   render() {
     return (
-      // <ImageBackground
-      //   source={background}
-      //   style={styles.container}
-      // >
-      //   <Button title="Sign Up"
-      //     style={styles.button}
-      //     onPress={() => this.props.navigation.navigate('SignUp')}
-      //   />
-      //   <TextInput
-      //     style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-      //     onChangeText={email => this.setState({ email })}
-      //     value={this.state.email}
-      //   />
-      //   <TextInput
-      //     style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-      //     onChangeText={password => this.setState({ password })}
-      //     value={this.state.password}
-      //   />
-      //   <Button title="Login" onPress={() => this.signIn()} />
-      // </ImageBackground>
       <View style={styles.container}>
-        <Form
-          ref={c => this._form = c} // assign a ref
-          type={User}
-        />
-        <Button title="Login" onPress={() => this.signIn()} />
-        <Button title="SignUp" onPress={() => this.signUp()} />
+        <View>
+          {this.renderGames()}
+
+
+        </View>
       </View>
     );
   }
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     width: undefined,
-//     height: undefined,
-//     backgroundColor: 'transparent',
-//
-//   },
-//   button: {
-//     flex: 1,
-//     justifyContent: 'flex-end',
-//   },
-// });
+// export default postEvaList;
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: '#ffffff',
-  },
-});
+const mapStateToProps = state => (
+  {
+    user: state.user,
+    games: state.games,
+    courts: state.courts,
+  }
+);
 
-export default connect(null, {
-  signinUser, fetchUser, fetchCourts, fetchGames,
-})(Login);
-
-// <Button title="Login"
-//   style={styles.button}
-//   onPress={() => this.props.navigation.navigate('Home')}
-// />
+// export default PostEvaList;
+export default connect(mapStateToProps, { fetchGames, fetchCourts })(PostEvaList);
