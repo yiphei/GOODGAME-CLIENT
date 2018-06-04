@@ -25,7 +25,7 @@ class Home extends Component {
 
   renderGames() {
     // this.props.findGames(this.props.userGameIds);
-    console.log(this.props.userGameIds);
+    // console.log(this.props.userGameIds);
     // const gameList = this.props.userGameIds.map(game =>
     //   (
     //     console.log(gameList)

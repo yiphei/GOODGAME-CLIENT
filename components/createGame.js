@@ -32,7 +32,7 @@ class Home extends Component {
     //   max_players: this.state.max_players,
     //   level: this.state.level,
     // };
-    console.log('creating game...');
+    // console.log('creating game...');
     this.setState({
       date: this.state.date,
       time: this.state.time,
@@ -51,10 +51,10 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.topDescription}> Create Game </Text>
+        <Text style={styles.name}>
+          Date: Month/Day
+        </Text>
         <View style={styles.inputField}>
-          <Text style={styles.name}>
-            Date
-          </Text>
           <TextInput
             style={{
  height: 40, width: 270, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
@@ -63,10 +63,11 @@ class Home extends Component {
             value={this.state.date}
           />
         </View>
+        <Text style={styles.name}>
+          Time: Hour:Min AM/PM
+        </Text>
         <View style={styles.inputField}>
-          <Text style={styles.name}>
-            Time
-          </Text>
+
           <TextInput
             style={{
  height: 40, width: 270, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
@@ -75,10 +76,11 @@ class Home extends Component {
             value={this.state.time}
           />
         </View>
+        <Text style={styles.name}>
+          Duration: number of minutes
+        </Text>
         <View style={styles.inputField}>
-          <Text style={styles.name}>
-            Duration
-          </Text>
+
           <TextInput
             style={{
  height: 40, width: 220, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
@@ -87,10 +89,11 @@ class Home extends Component {
             value={this.state.duration}
           />
         </View>
+        <Text style={styles.name}>
+          Players needed: number of players needed
+        </Text>
         <View style={styles.inputField}>
-          <Text style={styles.name}>
-            Players needed
-          </Text>
+
           <TextInput
             style={{
  height: 40, width: 200, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
@@ -99,10 +102,11 @@ class Home extends Component {
             value={this.state.players_needed}
           />
         </View>
+        <Text style={styles.name}>
+          Max players: number of maximum players
+        </Text>
         <View style={styles.inputField}>
-          <Text style={styles.name}>
-            Max players
-          </Text>
+
           <TextInput
             style={{
  height: 40, width: 220, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,
@@ -111,10 +115,11 @@ class Home extends Component {
             value={this.state.max_players}
           />
         </View>
+        <Text style={styles.name}>
+          Level number: from 1-100
+        </Text>
         <View style={styles.inputField}>
-          <Text style={styles.name}>
-            Level
-          </Text>
+
           <TextInput
             style={{
  height: 40, width: 270, borderColor: 'gray', borderWidth: 1, marginHorizontal: 10,

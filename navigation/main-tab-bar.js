@@ -60,7 +60,7 @@ const MainTabBar = createBottomTabNavigator(
     MyProfile: {
       screen: MyProfile,
       navigationOptions: ({ navigation }) => ({
-        tabBarLabel: 'MyProfile',
+        tabBarLabel: 'My Profile',
         tabBarIcon: ({ focused }) => (
           <Ionicons
             name="user"
@@ -74,7 +74,7 @@ const MainTabBar = createBottomTabNavigator(
     PostEvaList: {
       screen: PostEvaList,
       navigationOptions: ({ navigation }) => ({
-        tabBarLabel: 'PostEvaList',
+        tabBarLabel: 'PostEval',
         tabBarIcon: ({ focused }) => (
           <Ionicons
             name="comments"

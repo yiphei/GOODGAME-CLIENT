@@ -76,8 +76,8 @@ class PostEvaList extends Component {
   }
 
   renderGames() {
-    this.props.fetchGames();
-    console.log('What is in the this.props.games are: ', this.props.games);
+    // this.props.fetchGames();
+    // console.log('What is in the this.props.games are: ', this.props.games);
 
     //
     // const gameList = this.props.games.all.map(game =>
@@ -106,11 +106,12 @@ class PostEvaList extends Component {
     //
     //   ));
     /* eslint guard-for-in: 0 */
-
+    let gameId = 0;
     const gamelistss = this.props.games.all;
     const cardss = [];
     // const gifNumb = Math.floor(Math.random() * 5) + 1;
     gamelistss.forEach((game) => {
+      gameId++;
       console.log('game', game);
       // switch (gifNumb) {
       //   case 1:
@@ -150,8 +151,8 @@ class PostEvaList extends Component {
       //     });
       // }
       cardss.push({
-        id: '4',
-        title: `Game Playe at ${game.time}`,
+        id: gameId,
+        title: `Game Played at ${game.time}`,
         /* eslint global-require: "error" */
         picture: require('../assets/eval_1.gif'),
         content: <Evaluation />,

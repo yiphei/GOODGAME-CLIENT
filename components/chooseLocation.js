@@ -22,7 +22,7 @@ class Choose extends Component {
 
   componentDidMount() {
     this.props.fetchCourts();
-    console.log(this.props.game);
+    // console.log(this.props.game);
   }
 
   courtOne() {
@@ -55,10 +55,12 @@ class Choose extends Component {
   // }
 
   render() {
+    const title1 = this.props.courts[0].title;
+    const title2 = this.props.courts[1].title;
     return (
       <View style={styles.container}>
-        <Button title="Alumni Gym" onPress={() => this.courtOne()} />
-        <Button title="Alumni Gym Outdoors" onPress={() => this.courtTwo()} />
+        <Button title={title1} onPress={() => this.courtOne()} />
+        <Button title={title2} onPress={() => this.courtTwo()} />
       </View>
     );
   }

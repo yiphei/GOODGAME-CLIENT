@@ -70,7 +70,7 @@ class CreateCourt extends Component {
 
   createMarker(e) {
     // write point to database
-    console.log(e.nativeEvent.coordinate);
+    // console.log(e.nativeEvent.coordinate);
     const fields = {
       title: 'New Court',
       lat: e.nativeEvent.coordinate.latitude,

@@ -49,8 +49,6 @@ class GameView extends Component {
 
   renderPlayers = () => {
     if (this.props.game.players_list) {
-      console.log('INSIDE RENDERPLAYERS');
-      console.log(this.props.game.players_list);
       return this.props.game.players_list.map((player) => {
         return (
           <View>
@@ -131,7 +129,6 @@ class GameView extends Component {
 
   gameUpdate = () => {
     // call updatePost here
-    console.log('INSIDE UPDATE GAMEVIEW');
     const newgame = {
       date: this.state.date,
       time: this.state.time,
@@ -140,7 +137,6 @@ class GameView extends Component {
       max_players: this.state.max_players,
       level: this.state.level,
     };
-    console.log(newgame);
     this.props.updateGame(this.props.navigation.state.params.game._id, Object.assign({}, this.props.game, newgame));
     this.setState({ isEditing: false });
   }
