@@ -35,29 +35,27 @@ User profile code is from https://github.com/nattatorn-dev/react-native-user-pro
 
 ## Implementation Notes and Future Steps
 
-join, delete, edit game:
-  - our app is a little slow, so these functions take a little while. create games
-  - delete just takes a little while to show. you can only delete game you made
+### Notes on implementation
+* Our app is a little slow, so create, delete, edit, and join game functions take a little while to render. Note about deleting games: you can only delete game you made.
+* Chatbot: need to scroll down to see the chat.
 
-  chatbot: need to scroll down to see the chat
-
-  bugs/future fixes:
-  - app is slow to load.Even after reducing the fetch calls and things in render.
-     - we made some improvements by removing unnecessary calls to fetchGames
-     - gifs load slowly in gameEval
-  - user name in profile is hardcoded
-  - chatbot is using hardcoded players
-  - Adding more gyms
-  - The join game button does not change to leave game after you have joined. You can still leave the game if you press it but it would be nice if it actually said leave.
-  - place for your games
-  * when you hover over a court, the tooltip with the name of the court shows up. this may make it confusing - which court’s games you are looking at. in the future we would add a header that shows which courts are currently being shown
+### Bugs/future fixes:
+* App is slow to load even after reducing the fetch calls and things in render.
+    * We made some improvements by removing unnecessary calls to fetchGames
+    * Gifs load slowly in gameEval
+* User name in profile is hardcoded
+* Check that date, time, etc. entered into form are in the correct format when creating game
+* Chatbot is using hardcoded players
+* Adding more gyms
+* The join game button does not change to leave game after you have joined. You can still leave the game if you press it but it would be nice if it actually said leave.
+* Place to view your games
+* When you hover over a court, the tooltip with the name of the court shows up. This may make it confusing to identify which court’s games you are looking at. In the future we would add a header that shows which court's games are currently being shown. 
 
 
 ## APIs used
 
--React Native Gifted Chat (source: https://github.com/FaridSafi/react-native-gifted-chat)
--React Native Cards List (source: https://github.com/dmbfm/react-native-card-list)
-
+* React Native Gifted Chat (source: https://github.com/FaridSafi/react-native-gifted-chat)
+* React Native Cards List (source: https://github.com/dmbfm/react-native-card-list)
 
 ## Setup/deployment steps
 
