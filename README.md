@@ -9,11 +9,12 @@ We implemented create/join/edit/delete a game, map view, and the post-game evalu
 # Create/join/edit/delete a game
 When the user wants to create a game, he/she/they will fill out a form that prompts them to fill out the date, time, duration, players needed, maximum number of players, and intensity. Then they will have to click Choose Location to move to another view. Which will list
 the gyms in our area in our case the Alumni gym and outside of the Alumni gym. Then in the home page if the user clicks on the pin on the map to the gym they choose they should see a card with the information they placed into create game. Then if they click on the text of the card with the game they created they can edit all fields, leave the game they created, or delete the game all listed once you click on the card. We decided that creators do not have a right to kick people out of games, because in true pick up basketball spirit they should handle those disputes on the court. Only the creator of the game is able to delete the game they created. The user is able to join any game listed and able to leave any game listed in home as many times as they want.
-
+![Alt Text](https://github.com/dartmouth-cs52-18S/project-other-goodgame/blob/newMaster/img/create_game.gif)
 ![Alt Text](https://github.com/dartmouth-cs52-18S/project-other-goodgame/blob/newMaster/img/join_delete_game.gif)
 
 # Post-game evaluation
 After the user has played a game, he/she/they should be able to evaluate the fellow players which they have just played with. For each of the fellow players, the user could either 'like' or 'dislike' them. All the feedbacks will be stored and processed to update each player's score. The overall evaluation would affect each player's score either positively or negatively. For overall positive feedback, the system would boost up a player's score. For overall negative feedback, the system would decrease a player's score.
+![Alt Text](https://github.com/dartmouth-cs52-18S/project-other-goodgame/blob/newMaster/img/postgame_evaluation.gif)
 
 # Map view
 The map view is the screen that the user first sees when they sign into the app. The map has pins that display where each basketball court is. At the bottom of the screens are cards, each displaying a game at the selected court with basic information like the date and time of that game. When the user taps a pin, the cards will show the games at that court. When the user taps on a card, they go to a different screen showing more details about that game.
