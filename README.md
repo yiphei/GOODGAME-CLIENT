@@ -2,6 +2,9 @@
 
 In this part, we implemented pre-game evaluation, create/join/delete a game and the post-game evaluation.
 
+# Server
+The server code can be found at https://github.com/dartmouth-cs52-18S/project-api-goodgame.
+
 # Pre-game evaluation
 
 # Create/join/delete a game
