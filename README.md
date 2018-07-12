@@ -6,6 +6,7 @@
 This is an App made for pick-up basketball lovers at Dartmouth College and around the world to help them find available courts and people who they want to play with, the games which match the most to their expectations and gamify their games.
 We implemented create/join/edit/delete a game, map view, and the post-game evaluation.
 
+
 # Create/join/edit/delete a game
 When the user wants to create a game, he/she/they will fill out a form that prompts them to fill out the date, time, duration, players needed, maximum number of players, and intensity. Then they will have to click Choose Location to move to another view. Which will list
 the gyms in our area in our case the Alumni gym and outside of the Alumni gym. Then in the home page if the user clicks on the pin on the map to the gym they choose they should see a card with the information they placed into create game. Then if they click on the text of the card with the game they created they can edit all fields, leave the game they created, or delete the game all listed once you click on the card. We decided that creators do not have a right to kick people out of games, because in true pick up basketball spirit they should handle those disputes on the court. Only the creator of the game is able to delete the game they created. The user is able to join any game listed and able to leave any game listed in home as many times as they want.
@@ -110,3 +111,4 @@ https://expo.io/@lessleyh/goodGame
   - packager-info.json
 - main-tab-bar.js
 - main.js
+
