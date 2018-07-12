@@ -26,17 +26,17 @@ class Login extends Component {
 
   componentDidMount() {
     this.props.fetchCourts();
-    this.props.fetchGames();
+    // this.props.fetchGames();
   }
 
   signIn() {
     const value = this._form.getValue(); // use that ref to get the form value
-    console.log('value: ', value);
-    console.log('state: ', this.state);
+    // console.log('value: ', value);
+    // console.log('state: ', this.state);
 
 
     if (value != null) {
-      console.log('value: ', value.email);
+      // console.log('value: ', value.email);
       this.props.signinUser({ email: value.email, password: value.password });
       this.props.navigation.navigate('Map');
     }

@@ -47,7 +47,7 @@ class Evaluation extends Component {
     // init with only system messages
     this.setState({ messages: messagesData.filter(message => message.system) });
     const game = gameData;
-    console.log(game.playersSignedUp);
+    // console.log(game.playersSignedUp);
     this.setState({ step: game.playersSignedUp.length - 1 });
     setTimeout(() => this.botSend(1), 0);
     setTimeout(() => this.botSendEval(game.playersSignedUp.length - 1), 1000 + Math.round(Math.random() * 1000));

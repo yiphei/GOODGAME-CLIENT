@@ -23,6 +23,26 @@ const Images = [
   { uri: 'https://media.giphy.com/media/RsnFpEDtHjO48/giphy.gif' },
   { uri: 'https://media.giphy.com/media/sngOr8Y7O7uz6/giphy.gif' },
   { uri: 'https://media.giphy.com/media/KvTuvZjYiERHy/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/vrd9ryhalxTws/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/RsnFpEDtHjO48/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/sngOr8Y7O7uz6/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/KvTuvZjYiERHy/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/vrd9ryhalxTws/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/RsnFpEDtHjO48/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/sngOr8Y7O7uz6/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/KvTuvZjYiERHy/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/vrd9ryhalxTws/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/RsnFpEDtHjO48/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/sngOr8Y7O7uz6/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/KvTuvZjYiERHy/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/3oEdv9kR4Jsl05gS4w/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/vrd9ryhalxTws/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/RsnFpEDtHjO48/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/sngOr8Y7O7uz6/giphy.gif' },
+  { uri: 'https://media.giphy.com/media/KvTuvZjYiERHy/giphy.gif' },
 ];
 
 const { width, height } = Dimensions.get('window');
@@ -32,7 +52,7 @@ const CARD_WIDTH = CARD_HEIGHT - 50;
 // change to markers: this.props.courts
 class Map extends Component {
   constructor(props) {
-    console.log('constructor');
+    // console.log('constructor');
     super(props);
     this.state = {
       selectedMarker: 0,
@@ -47,20 +67,19 @@ class Map extends Component {
   }
 
   componentWillMount() {
-    console.log('componentwillmount');
+    // console.log('componentwillmount');
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
 
   componentDidMount() {
-    console.log('componentdidmount');
     this.props.fetchCourts();
-    this.props.fetchGames();
+    // this.props.fetchGames();
 
 
     // this.props.fetchCourt(this.props.courts[0]);
 
-    console.log(this.props.courts);
+    // console.log(this.props.courts);
     // this.setState({ markers: this.props.courts.all });
 
     // We should detect when scrolling has stopped then animate
@@ -70,16 +89,15 @@ class Map extends Component {
       const index = 0;
       clearTimeout(this.regionTimeout);
       this.regionTimeout = setTimeout(() => {
-        console.log('Hi');
         if (this.index !== index) {
           // console.log('Jesus*****');
           this.index = index;
-          console.log(this.props.courts[index]);
+          // console.log(this.props.courts[index]);
 
           // const { coordinate } = this.props.courts[0].coordinate;
           const { coordinate } = this.props.courts[this.state.selectedMarker].coordinate;
 
-          console.log('court pin rendered');
+          // console.log('court pin rendered');
           this.map.animateToRegion(
             {
               ...coordinate,
@@ -94,17 +112,17 @@ class Map extends Component {
   }
 
   markerClick(marker) {
-    console.log('markerClick');
+    // console.log('markerClick');
     // this.props.navigation.navigate('Home');
     // console.log('selectedMarker ', this.props.courts[marker]);
 
     this.setState({ selectedMarker: marker });
     // this.props.fetchCourt(this.props.courts[marker]._id);
-    console.log('this.props.courts[marker]._id ', this.props.courts[marker]._id);
+    // console.log('this.props.courts[marker]._id ', this.props.courts[marker]._id);
   }
 
   showGameDetail = (game) => {
-    console.log('Clicked it');
+    // console.log('Clicked it');
     this.props.navigation.navigate('GameView', { game });
   }
 
@@ -115,7 +133,7 @@ class Map extends Component {
     // console.log('render selectedMarker ', this.props.court.game_list);
 
     // console.log(this.cardDraw());
-    console.log('render selectedMarker ', this.props.courts[this.state.selectedMarker]);
+    // console.log('render selectedMarker ', this.props.courts[this.state.selectedMarker]);
     // console.log('this.props.court ', this.props.court);
     const interpolations = this.props.courts.map((marker, index) => {
       const inputRange = [

@@ -41,13 +41,13 @@ class SignUp extends Component {
 
   signUp() {
     const value = this._form.getValue(); // use that ref to get the form value
-    console.log('value: ', value);
-    console.log('state: ', this.state);
+    // console.log('value: ', value);
+    // console.log('state: ', this.state);
 
-    console.log('IN SINGNUP');
+    // console.log('IN SINGNUP');
     if (value != null) {
-      console.log('INSIDE IF STATEMENT');
-      console.log('value: ', value.email);
+      // console.log('INSIDE IF STATEMENT');
+      // console.log('value: ', value.email);
       this.props.signupUser({ email: value.email, password: value.password, handle: value.username });
       this.props.navigation.navigate('Map');
     }
